@@ -94,7 +94,26 @@ const BlogPost = () => {
 
             {/* Article content */}
             <div className="prose prose-lg dark:prose-invert max-w-none" ref={contentRef}>
-              <Markdown remarkPlugins={[remarkGfm]}>
+              <Markdown remarkPlugins={[remarkGfm]}
+                components={{
+                  code(props) {
+                    const {children, className, node, ...rest} = props
+                    return (
+                      <code className={className} style={{overflowX: 'auto', display: 'block', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}} {...rest}>
+                        {children}
+                      </code>
+                    )
+                  },
+                  pre(props) {
+                    const {children, ...rest} = props
+                    return (
+                      <pre style={{overflowX: 'auto', maxWidth: '100%'}} {...rest}>
+                        {children}
+                      </pre>
+                    )
+                  }
+                }}
+              >
                 {article.content}
               </Markdown>
             </div>
