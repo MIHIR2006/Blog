@@ -49,7 +49,7 @@ const BlogPost = () => {
               variant="ghost"
               size="sm"
               className="mb-8"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/blog")}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back

@@ -229,7 +229,7 @@ In real-world applications, you're not limited to choosing just one. Consider:
 Both REST and GraphQL have their merits, and the "right" choice depends on your specific requirements. Consider your team's expertise, application complexity, and future scalability needs when making your decision.
 
 Remember: the best API architecture is the one that solves your specific problems while minimizing complexity.
-    `,    
+    `,
     author: {
       name: "Mihir Goswami",
       avatar: "./image/Mihir.png",
