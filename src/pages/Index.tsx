@@ -8,17 +8,17 @@ import { Link } from "react-router-dom";
 
 const Index = () => {
   useScrollToTop();
-  
+
   // Get the featured article (first one)
   const featuredArticle = articles[0];
-  
+
   // Get the rest of the articles
   const recentArticles = articles.slice(1);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
+
       <main className="flex-grow">
         {/* Hero section */}
         <section className="py-12 md:py-20">
@@ -34,7 +34,7 @@ const Index = () => {
                 <Link to="/blog">Read Articles</Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link to="/about">About Us</Link>
+                <Link to="/about">About Me</Link>
               </Button>
             </div>
           </div>
@@ -49,7 +49,7 @@ const Index = () => {
                 View all
               </Link>
             </div>
-            
+
             <ArticleCard
               id={featuredArticle.id}
               title={featuredArticle.title}
@@ -72,7 +72,7 @@ const Index = () => {
                 View all
               </Link>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {recentArticles.map((article) => (
                 <ArticleCard
