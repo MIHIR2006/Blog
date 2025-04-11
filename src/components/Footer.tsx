@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Github, Instagram, Linkedin, Twitter, CodeXml } from "lucide-react";
+import { CodeXml, Coffee, Github, Instagram, Linkedin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Footer() {
@@ -36,7 +36,7 @@ export function Footer() {
           </div>
           <div>
             <h3 className="font-playfair text-xl font-bold mb-4">Connect</h3>
-            <div className="flex items-center space-x-4">
+            <div className="lg:grid lg:grid-cols-3">
               <a href="https://x.com/MIHIR___0007" target="_blank" rel="noopener noreferrer">
                 <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary">
                   <Twitter className="h-5 w-5" />
@@ -55,10 +55,18 @@ export function Footer() {
                   <span className="sr-only">Github</span>
                 </Button>
               </a>
+
               <a href="https://www.linkedin.com/in/mihir-goswami/" target="_blank" rel="noopener noreferrer">
                 <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary">
                   <Linkedin className="h-5 w-5" />
                   <span className="sr-only">LinkedIn</span>
+                </Button>
+              </a>
+
+              <a href="https://buymeacoffee.com/mihir_goswami" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="rounded-full hover:bg-secondary">
+                  <Coffee className="h-5 w-5" />
+                  <span className="sr-only">Coffee</span>
                 </Button>
               </a>
 
@@ -73,7 +81,7 @@ export function Footer() {
         </div>
         <Separator className="my-8" />
         <div className="text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Scribe. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Mihir Goswami  — Thanks for reading. All rights reserved.</p>
         </div>
       </div>
     </footer>

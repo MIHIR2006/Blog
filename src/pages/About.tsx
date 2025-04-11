@@ -15,34 +15,34 @@ const About = () => {
         <div className="container-medium py-12">
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-8">About Me</h1>
 
-          <section className="mb-12">
-    <h2 className="font-serif text-2xl font-bold mb-4">Hey there, I'm Mihir</h2>
+          <section className="mb-12 text-justify">
+            <h2 className="font-serif text-2xl font-bold mb-4">Hey there, I'm Mihir</h2>
             <p className="text-lg text-muted-foreground mb-4">
-        i am student pursuing a Bachelor's degree in Computer Science. I possess a significant interest in Software Development and am continuously seeking to broaden my understanding within the dynamic field of technology. 
-            My current experience includes practical application of the MERN stack in building web applications. Furthermore, I am actively engaged in learning various web technologies and exploring areas such as Web 3 and system design.
+              i am student pursuing a Bachelor's degree in Computer Science. I possess a significant interest in Software Development and am continuously seeking to broaden my understanding within the dynamic field of technology.
+              My current experience includes practical application of the MERN stack in building web applications. Furthermore, I am actively engaged in learning various web technologies and exploring areas such as Web 3 and system design.
             </p>
             <p className="text-lg text-muted-foreground">
-        As a dedicated tech enthusiast, I am committed to staying informed about the latest industry trends and aspire to integrate my technical capabilities and creative thinking to develop innovative software and contribute to open source initiatives.
+              As a dedicated tech enthusiast, I am committed to staying informed about the latest industry trends and aspire to integrate my technical capabilities and creative thinking to develop innovative software and contribute to open source initiatives.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-12">
-        <h2 className="font-serif text-2xl font-bold mb-6">About the Author</h2>
+            <h2 className="font-serif text-2xl font-bold mb-6">About the Author</h2>
             <div className="flex items-start gap-6 flex-col md:flex-row">
               <Avatar className="h-24 w-24">
-                <AvatarImage src="./image/Mihir.png" alt="Mihir Goswami" />
+                <AvatarImage src=".\src\data\image\MihirProfile.jpg" alt="Mihir Goswami" />
                 <AvatarFallback>MG</AvatarFallback>
               </Avatar>
               <div>
                 <h3 className="text-xl font-bold mb-2">Mihir Goswami</h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-4 text-justify">
                   Full-stack developer with expertise in modern web technologies and security practices.
                   Passionate about creating efficient, secure, and user-friendly applications.
                 </p>
-                <p className="text-muted-foreground">
-                  With years of industry experience across various domains, Mihir shares practical insights
+                <p className="text-muted-foreground text-justify">
+                  With 2+ years of experience, I shares practical insights
                   and best practices learned from real-world projects and challenges.
                 </p>
               </div>
