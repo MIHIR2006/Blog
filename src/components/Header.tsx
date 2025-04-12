@@ -2,43 +2,71 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Menu, Search, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Check if current route is search page
+  const isSearchPage = location.pathname === '/search';
 
   const handleOpenSearch = useCallback(() => {
-    console.log("Opening search dialog");
-    setIsSearchOpen(true);
-  }, []);
+    if (!isSearchPage) {
+      setIsSearchOpen(true);
+    }
+  }, [isSearchPage]);
+
+  // Focus the search input when the dialog opens
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      // Slight delay to ensure dialog is fully open
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 50);
+    }
+  }, [isSearchOpen]);
 
   // Handle keyboard shortcut
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        console.log("Keyboard shortcut detected: Cmd+K / Ctrl+K");
-        setIsSearchOpen(prev => !prev);
+        // Only toggle search if not on search page
+        if (!isSearchPage) {
+          setIsSearchOpen(prev => !prev);
+        }
+      }
+
+      // Close search dialog on Escape key
+      if (e.key === "Escape" && isSearchOpen) {
+        setIsSearchOpen(false);
       }
     };
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, []);
+  }, [isSearchOpen, isSearchPage]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      console.log("Searching for:", searchQuery);
       setIsSearchOpen(false);
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      // Reset search query after navigation
+      setSearchQuery("");
     }
-  };
+  }, [searchQuery, navigate]);
+
+  const handleSearchInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  }, []);
 
   return (
     <header className="border-b border-border sticky top-0 z-40 bg-background/95 backdrop-blur">
@@ -83,8 +111,14 @@ export function Header() {
             variant="ghost" 
             size="icon"
             onClick={handleOpenSearch}
-            className="relative"
+            className={`relative transition-colors ${
+              isSearchPage 
+                ? 'opacity-50 cursor-not-allowed' 
+                : 'hover:bg-muted/70'
+            }`}
             aria-label="Search"
+            disabled={isSearchPage}
+            title={isSearchPage ? "Already on search page" : "Search articles"}
           >
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
@@ -93,7 +127,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Simple search dialog instead of CommandDialog */}
+      {/* Search dialog with improved focus handling */}
       <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -101,14 +135,23 @@ export function Header() {
           </DialogHeader>
           <form onSubmit={handleSearch} className="flex items-center gap-2">
             <Input
+              ref={searchInputRef}
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleSearchInputChange}
               placeholder="Search articles..."
               className="flex-1"
-              autoFocus
             />
-            <Button type="submit">Search</Button>
+            <Button 
+              type="submit"
+              disabled={!searchQuery.trim()}
+            >
+              <Search className="h-4 w-4 mr-2" />
+              Search
+            </Button>
           </form>
+          <div className="pt-2 text-xs text-muted-foreground">
+            Press <kbd className="px-1 py-0.5 rounded border bg-muted mx-1">ESC</kbd> to close or <kbd className="px-1 py-0.5 rounded border bg-muted mx-1">Enter</kbd> to search
+          </div>
         </DialogContent>
       </Dialog>
     </header>

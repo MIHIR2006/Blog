@@ -1,5 +1,5 @@
 import { articles } from "@/data/articles";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface Author {
   name: string;
@@ -23,50 +23,46 @@ export function useSearch(query: string) {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("useSearch hook called with query:", query);
+  // Memoize articles data to avoid recreating on each render
+  const articlesData = useMemo(() => articles, []);
 
   useEffect(() => {
     if (!query || !query.trim()) {
-      console.log("Empty query, clearing results");
       setResults([]);
       setIsLoading(false);
       return;
     }
 
     setIsLoading(true);
-    console.log("Search started for:", query);
 
-    // Simulate a small delay to give a more realistic search experience
+    // Use a faster timeout to improve perceived performance
     const timeoutId = setTimeout(() => {
       try {
         const searchTerm = query.toLowerCase().trim();
-        console.log("Articles available for search:", articles.length);
         
-        // Using the same filtering approach as in the Blog component
-        const filteredResults = articles
+        // Create a single regex for more efficient searching
+        const searchRegex = new RegExp(searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+        
+        const filteredResults = articlesData
           .filter(article => {
             if (!article) return false;
             
-            // Perform the search on all relevant fields
-            const titleMatch = (article.title || "").toLowerCase().includes(searchTerm);
-            const contentMatch = (article.content || "").toLowerCase().includes(searchTerm);
-            const excerptMatch = (article.excerpt || "").toLowerCase().includes(searchTerm);
+            // Use regex test which is faster than includes for repeated searches
+            const titleMatch = searchRegex.test(article.title || "");
+            const contentMatch = searchRegex.test(article.content || "");
+            const excerptMatch = searchRegex.test(article.excerpt || "");
             
-            // Use the same tag matching logic as the Blog component
+            // Check tags in a more optimized way
             const tagsMatch = article.tags?.some(tag => 
-              (tag || "").toLowerCase().includes(searchTerm)
+              searchRegex.test(tag || "")
             ) || false;
             
-            // Look in author name too
+            // Check author name
             const authorMatch = article.author?.name 
-              ? article.author.name.toLowerCase().includes(searchTerm) 
+              ? searchRegex.test(article.author.name) 
               : false;
             
-            const isMatch = titleMatch || contentMatch || tagsMatch || excerptMatch || authorMatch;
-            if (isMatch) {
-              console.log(`Match found in article: ${article.id} - ${article.title}`);
-            }
-            return isMatch;
+            return titleMatch || contentMatch || tagsMatch || excerptMatch || authorMatch;
           })
           .map(article => ({
             id: article.id,
@@ -80,22 +76,17 @@ export function useSearch(query: string) {
             author: article.author
           }));
 
-        console.log(`Search results for "${query}":`, filteredResults.length, 'results found');
-        if (filteredResults.length > 0) {
-          console.log("First result:", filteredResults[0].title);
-        }
         setResults(filteredResults);
       } catch (error) {
         console.error("Error during search:", error);
         setResults([]);
       } finally {
         setIsLoading(false);
-        console.log("Search completed");
       }
-    }, 150);
+    }, 100); // Reduced from 150ms to 100ms for better performance
 
     return () => clearTimeout(timeoutId);
-  }, [query]);
+  }, [query, articlesData]);
 
   return {
     results,

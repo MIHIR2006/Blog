@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSearch } from "@/hooks/useSearch";
 import { Loader2, SearchIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function SearchResults() {
@@ -13,29 +13,82 @@ export default function SearchResults() {
   const initialQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQuery);
   const [inputValue, setInputValue] = useState(initialQuery);
+  const [debouncedInputValue, setDebouncedInputValue] = useState(inputValue);
   const { results, isLoading } = useSearch(query);
 
-  console.log("SearchResults page:", { 
-    query, 
-    resultsLength: results.length, 
-    isLoading,
-    results: results.slice(0, 3) // Log first 3 results for debugging
-  });
+  // Debounce input value changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedInputValue(inputValue);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [inputValue]);
 
   // Update search when URL param changes
   useEffect(() => {
     const newQuery = searchParams.get("q") || "";
-    console.log("URL params changed:", newQuery);
     setQuery(newQuery);
     setInputValue(newQuery);
+    setDebouncedInputValue(newQuery);
   }, [searchParams]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Search submitted:", inputValue);
-    setSearchParams({ q: inputValue });
-    setQuery(inputValue);
-  };
+    if (debouncedInputValue.trim() !== query.trim()) {
+      setSearchParams({ q: debouncedInputValue.trim() });
+      setQuery(debouncedInputValue.trim());
+    }
+  }, [debouncedInputValue, query, setSearchParams]);
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }, []);
+
+  // Memoize the results count message
+  const resultsCountMessage = useMemo(() => {
+    if (isLoading) {
+      return (
+        <span className="flex items-center">
+          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+          Searching...
+        </span>
+      );
+    }
+    return `Found ${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`;
+  }, [isLoading, results.length, query]);
+
+  // Memoize the article grid
+  const articleGrid = useMemo(() => {
+    if (!isLoading && results.length === 0) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-xl font-semibold mb-2">No results found</p>
+          <p className="text-muted-foreground">
+            Try searching with different keywords or browse all articles
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {results.map((article) => (
+          <ArticleCard
+            key={article.id}
+            id={article.id}
+            title={article.title}
+            excerpt={article.excerpt}
+            tags={article.tags}
+            coverImage={article.coverImage}
+            date={article.date}
+            readTime={article.readTime}
+            author={article.author}
+          />
+        ))}
+      </div>
+    );
+  }, [isLoading, results]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -50,11 +103,15 @@ export default function SearchResults() {
             <form onSubmit={handleSearch} className="flex gap-2 mb-8 max-w-3xl">
               <Input
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                onChange={handleInputChange}
                 placeholder="Search articles..."
                 className="w-full"
               />
-              <Button type="submit" className="shrink-0">
+              <Button 
+                type="submit" 
+                className="shrink-0"
+                disabled={debouncedInputValue.trim() === query.trim() || debouncedInputValue.trim() === ""}
+              >
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <SearchIcon className="h-4 w-4 mr-2" />}
                 Search
               </Button>
@@ -64,41 +121,11 @@ export default function SearchResults() {
               <>
                 <div className="mb-6">
                   <p className="text-muted-foreground">
-                    {isLoading ? (
-                      <span className="flex items-center">
-                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                        Searching...
-                      </span>
-                    ) : (
-                      `Found ${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`
-                    )}
+                    {resultsCountMessage}
                   </p>
                 </div>
 
-                {!isLoading && results.length === 0 ? (
-                  <div className="text-center py-12">
-                    <p className="text-xl font-semibold mb-2">No results found</p>
-                    <p className="text-muted-foreground">
-                      Try searching with different keywords or browse all articles
-                    </p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {results.map((article) => (
-                      <ArticleCard
-                        key={article.id}
-                        id={article.id}
-                        title={article.title}
-                        excerpt={article.excerpt}
-                        tags={article.tags}
-                        coverImage={article.coverImage}
-                        date={article.date}
-                        readTime={article.readTime}
-                        author={article.author}
-                      />
-                    ))}
-                  </div>
-                )}
+                {articleGrid}
               </>
             ) : (
               <div className="text-center py-12">
