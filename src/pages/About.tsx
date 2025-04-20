@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
+import Profile from "@/data/image/MihirProfile.jpg";
 
 const About = () => {
   useScrollToTop();
@@ -32,7 +33,7 @@ const About = () => {
             <h2 className="font-serif text-2xl font-bold mb-6">About the Author</h2>
             <div className="flex items-start gap-6 flex-col md:flex-row">
               <Avatar className="h-24 w-24">
-                <AvatarImage src=".\src\data\image\MihirProfile.jpg" alt="Mihir Goswami" />
+                <AvatarImage src={Profile} alt="Mihir Goswami" />
                 <AvatarFallback>MG</AvatarFallback>
               </Avatar>
               <div>
