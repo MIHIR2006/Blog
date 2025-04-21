@@ -1,0 +1,7 @@
+[install]
+optional = false
+peer = false
+dry-run = false
+
+[build]
+minify = true 

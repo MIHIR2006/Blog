@@ -1,5 +1,8 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
-  ]
+  ],
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "framework": null
 }
