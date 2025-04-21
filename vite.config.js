@@ -27,8 +27,8 @@ export default defineConfig(({ mode }) => ({
     include: ['react-router-dom', 'gray-matter'],
   },
   define: {
-    'process.env': process.env,
-    'process.cwd': () => JSON.stringify(process.cwd()),
+    'process.env': {},
+    'process.cwd': JSON.stringify(process.cwd())
   },
   build: {
     rollupOptions: {
