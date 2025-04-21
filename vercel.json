@@ -6,6 +6,8 @@
   "installCommand": "npm install",
   "framework": "vite",
   "env": {
-    "ROLLUP_SKIP_LOAD_NATIVE_PLUGIN": "true"
+    "ROLLUP_SKIP_LOAD_NATIVE_PLUGIN": "true",
+    "ESBUILD_BINARY_PATH": "node_modules/esbuild/esbuild",
+    "NODE_OPTIONS": "--max-old-space-size=4096"
   }
 }
