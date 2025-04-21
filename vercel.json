@@ -4,5 +4,8 @@
   ],
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "framework": "vite"
+  "framework": "vite",
+  "env": {
+    "ROLLUP_SKIP_LOAD_NATIVE_PLUGIN": "true"
+  }
 }
