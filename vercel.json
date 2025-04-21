@@ -7,7 +7,8 @@
   "framework": "vite",
   "env": {
     "ROLLUP_SKIP_LOAD_NATIVE_PLUGIN": "true",
-    "ESBUILD_BINARY_PATH": "node_modules/esbuild/esbuild",
+    "SWC_BINARY_PATH": "/tmp/swc-binary",
+    "ESBUILD_BINARY_PATH": "/tmp/esbuild-binary",
     "NODE_OPTIONS": "--max-old-space-size=4096"
   }
 }
