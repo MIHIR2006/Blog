@@ -22,10 +22,10 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.mdx'],
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
   },
   optimizeDeps: {
-    include: ['react-router-dom', 'gray-matter', 'next-mdx-remote/serialize'],
+    include: ['react-router-dom', 'gray-matter'],
   },
   define: {
     'process.env': process.env,

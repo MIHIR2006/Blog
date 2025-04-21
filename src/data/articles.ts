@@ -1,6 +1,364 @@
 // Sample blog data
 export const articles = [
   {
+    id: "go-vs-rust",
+    title: "Go vs Rust: A Beginner-Friendly Comparison",
+    excerpt: "A comprehensive guide to help beginners understand the key differences, strengths, and use cases of Go and Rust programming languages.",
+    coverImage: "https://www.digitalogy.co/blog/wp-content/uploads/2025/01/rust-and-go.png",
+    content: `# Go vs Rust: A Beginner-Friendly Comparison
+
+*Choosing the right systems programming language for your projects*
+
+Go and Rust represent two modern approaches to systems programming, each with distinct philosophies and design goals. This guide aims to help beginners understand these powerful languages and make informed choices for their projects.
+
+## 1. Introduction to Go and Rust
+
+### Go (Golang)
+
+**Go** was developed at Google in 2007 (released in 2009) by Robert Griesemer, Rob Pike, and Ken Thompson. It was designed with simplicity and efficiency in mind, focusing on:
+
+- Fast compile times
+- Built-in concurrency
+- Garbage collection
+- Simplicity and readability
+- Network and multicore computing
+
+\`\`\`go
+// Hello World in Go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+\`\`\`
+
+### Rust
+
+**Rust** was initially developed by Mozilla (first stable release in 2015) and is now maintained by the Rust Foundation. It focuses on:
+
+- Memory safety without garbage collection
+- Concurrency without data races
+- Abstraction without performance penalties
+- Stability and reliability
+
+\`\`\`rust
+// Hello World in Rust
+fn main() {
+    println!("Hello, World!");
+}
+\`\`\`
+
+## 2. Key Differences at a Glance
+
+| Feature | Go | Rust |
+|---------|----|----|
+| **Learning Curve** | Gentle, designed to be easy to learn | Steeper, especially ownership concepts |
+| **Memory Management** | Garbage collection | Ownership system, no GC |
+| **Concurrency Model** | Goroutines and channels | Ownership + various options (async/await, threads) |
+| **Type System** | Static, simple | Static, advanced (traits, generics) |
+| **Compile Time** | Very fast | Slower (but improving) |
+| **Performance** | Good | Excellent (on par with C/C++) |
+| **Safety** | Good (runtime) | Excellent (compile-time) |
+
+## 3. **Go's Advantages** ✅
+
+### Simplicity and Readability
+
+Go's syntax is deliberately minimalist. This makes it **exceptionally approachable for beginners**:
+
+\`\`\`go
+// A simple HTTP server in Go
+package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
+}
+
+func main() {
+    http.HandleFunc("/", handler)
+    http.ListenAndServe(":8080", nil)
+}
+\`\`\`
+
+### Fast Compilation
+
+Go compiles extremely quickly, often in **seconds**, even for large projects. This enables quick iteration cycles during development.
+
+### Concurrency Made Easy
+
+Go's goroutines and channels make concurrent programming accessible:
+
+\`\`\`go
+// Concurrent execution with goroutines
+func main() {
+    go func() {
+        // This runs concurrently
+        fmt.Println("Hello from a goroutine!")
+    }()
+    
+    // Wait for the goroutine to finish
+    time.Sleep(100 * time.Millisecond)
+}
+\`\`\`
+
+### Strong Standard Library
+
+Go ships with a comprehensive standard library that covers everything from HTTP servers to cryptography and compression.
+
+### Deployment Simplicity
+
+Go compiles to a **single binary** with no external dependencies, making deployment straightforward.
+
+## 4. **Go's Disadvantages** ⚠️
+
+### Limited Expressiveness
+
+Go's simplicity comes at the cost of expressiveness. It lacks features like generics (until Go 1.18) and more advanced type system capabilities.
+
+### Garbage Collection Overhead
+
+While Go's garbage collector is efficient, it can introduce latency spikes in very performance-sensitive applications.
+
+### Error Handling Verbosity
+
+Error handling in Go is explicit but can be verbose:
+
+\`\`\`go
+file, err := os.Open("filename.txt")
+if err != nil {
+    // Handle error
+    return err
+}
+// Use file
+\`\`\`
+
+### Limited Low-Level Control
+
+Go abstracts many low-level details, which can be limiting for systems that require fine-grained control.
+
+## 5. **Rust's Advantages** ✅
+
+### Memory Safety Without Garbage Collection
+
+Rust's ownership system ensures memory safety at **compile time**, eliminating entire classes of bugs like null pointer dereferencing, buffer overflows, and data races:
+
+\`\`\`rust
+// Rust's ownership in action
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1; // s1 is moved to s2, s1 is no longer valid
+    
+    // This would cause a compile error:
+    // println!("{}", s1);
+    
+    println!("{}", s2); // Works fine
+}
+\`\`\`
+
+### Performance
+
+Rust offers **C/C++-level performance** without sacrificing safety, making it ideal for performance-critical applications.
+
+### Zero-Cost Abstractions
+
+Rust's abstractions (like iterators, traits, and generics) have no runtime overhead, allowing high-level code without performance penalties.
+
+### Fearless Concurrency
+
+Rust's ownership system prevents data races at compile time:
+
+\`\`\`rust
+use std::thread;
+
+fn main() {
+    let v = vec![1, 2, 3];
+    
+    let handle = thread::spawn(move || {
+        // v is moved into this thread
+        println!("Vector in thread: {:?}", v);
+    });
+    
+    // This would cause a compile error since v was moved:
+    // println!("Vector in main: {:?}", v);
+    
+    handle.join().unwrap();
+}
+\`\`\`
+
+### Modern Ecosystem
+
+Rust has an excellent package manager (Cargo), documentation tools, and testing framework built in.
+
+## 6. **Rust's Disadvantages** ⚠️
+
+### Steep Learning Curve
+
+Rust's ownership and borrowing concepts can be **challenging for beginners** to master.
+
+### Slower Compilation
+
+Rust's sophisticated compiler performs extensive analysis, leading to longer compilation times compared to Go.
+
+### More Verbose in Some Cases
+
+Rust code can be more verbose than equivalent code in other languages, especially for simple tasks:
+
+\`\`\`rust
+// Reading a file to a string in Rust
+use std::fs;
+use std::io;
+
+fn read_file(path: &str) -> Result<String, io::Error> {
+    fs::read_to_string(path)
+}
+\`\`\`
+
+### Evolving Ecosystem
+
+While growing rapidly, Rust's ecosystem is still maturing compared to more established languages.
+
+## 7. **When to Choose Go?** 🚀
+
+Go is often the better choice when:
+
+- You're building **web services** or **microservices**
+- Development speed is crucial
+- Your team includes developers of varying experience levels
+- You need straightforward deployment and operations
+- You're working on **cloud infrastructure** or **DevOps** tools
+
+**Real-world Go examples:** Docker, Kubernetes, Prometheus, Terraform, CockroachDB
+
+## 8. **When to Choose Rust?** 🦀
+
+Rust shines in scenarios requiring:
+
+- **Maximum performance** with safety guarantees
+- Systems programming (OS, embedded systems, drivers)
+- Memory-constrained environments
+- Processing of untrusted input where security is critical
+- **WebAssembly** applications
+
+**Real-world Rust examples:** Firefox components, Discord, Dropbox, Cloudflare Workers, AWS Firecracker
+
+## 9. Learning Path Comparison
+
+### Learning Go
+
+1. Master the basics: variables, control flow, functions
+2. Understand slices, maps, and structs
+3. Learn error handling patterns
+4. Explore concurrency with goroutines and channels
+5. Dive into the standard library
+
+**Estimated time to productivity:** 2-4 weeks
+
+### Learning Rust
+
+1. Learn basic syntax and concepts
+2. Master the ownership system, borrowing, and lifetimes
+3. Understand traits and generics
+4. Explore error handling with Result and Option
+5. Learn concurrency patterns and async/await
+
+**Estimated time to productivity:** 1-3 months
+
+## 10. Code Comparison: A Simple Web Server
+
+### Go Implementation
+
+\`\`\`go
+package main
+
+import (
+    "encoding/json"
+    "log"
+    "net/http"
+)
+
+type Response struct {
+    Message string \`json:"message"\`
+}
+
+func handleRequest(w http.ResponseWriter, r *http.Request) {
+    response := Response{Message: "Hello from Go!"}
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
+}
+
+func main() {
+    http.HandleFunc("/", handleRequest)
+    log.Println("Server starting on port 8080...")
+    if err := http.ListenAndServe(":8080", nil); err != nil {
+        log.Fatal(err)
+    }
+}
+\`\`\`
+
+### Rust Implementation
+
+\`\`\`rust
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use serde::{Serialize};
+
+#[derive(Serialize)]
+struct Response {
+    message: String,
+}
+
+async fn handle_request() -> impl Responder {
+    let response = Response {
+        message: String::from("Hello from Rust!"),
+    };
+    
+    HttpResponse::Ok().json(response)
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    println!("Server starting on port 8080...");
+    
+    HttpServer::new(|| {
+        App::new().route("/", web::get().to(handle_request))
+    })
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
+}
+\`\`\`
+
+## Conclusion
+
+Both Go and Rust are excellent modern programming languages, each optimized for different priorities:
+
+- **Go** prioritizes simplicity, readability, and development speed
+- **Rust** prioritizes safety, performance, and fine-grained control
+
+As a beginner, consider starting with Go if you want to be productive quickly, especially for web services and networked applications. Choose Rust if you're willing to invest more time upfront to gain powerful safety and performance benefits, particularly for systems programming.
+
+Remember that **the best language depends entirely on your specific project requirements, team expertise, and performance needs**. Many organizations successfully use both languages for different components of their systems.
+
+Which language are you leaning toward? Let me know your thoughts and experiences with either Go or Rust!`,
+    author: {
+      name: "Mihir Goswami",
+      avatar: "./image/Mihir.png",
+      initials: "MG",
+      bio: "Systems programmer with experience in Go and Rust development.",
+    },
+    date: "Dec 05, 2024",
+    readTime: "10 min read",
+    tags: ["Go", "Rust", "Programming", "Systems Programming", "Performance"],
+  },
+
+  {
     id: "javascript-typescript-comparison",
     title: "JavaScript vs TypeScript: A Comprehensive Comparison",
     excerpt:
