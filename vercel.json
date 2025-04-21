@@ -3,7 +3,7 @@
     { "source": "/(.*)", "destination": "/" }
   ],
   "buildCommand": "npm run build",
-  "installCommand": "npm install",
+  "installCommand": "npm install --include=dev",
   "framework": "vite",
   "env": {
     "ROLLUP_SKIP_LOAD_NATIVE_PLUGIN": "true",
