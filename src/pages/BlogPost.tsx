@@ -1,24 +1,41 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import MDXContent from "@/components/MDXContent";
 import { ProgressBar } from "@/components/ProgressBar";
 import { ShareButtons } from "@/components/ShareButtons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { articles } from "@/data/articles";
+import { Article, getArticleById } from "@/lib/articles";
 import { ArrowLeft } from "lucide-react";
-import { useEffect, useRef } from "react";
-import Markdown from "react-markdown";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import remarkGfm from "remark-gfm";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const contentRef = useRef<HTMLDivElement>(null);
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Find the article with the matching ID
-  const article = articles.find(article => article.id === id);
+  // Fetch article when component mounts or id changes
+  useEffect(() => {
+    async function loadArticle() {
+      if (id) {
+        try {
+          const fetchedArticle = await getArticleById(id);
+          setArticle(fetchedArticle || null);
+        } catch (error) {
+          console.error("Error fetching article:", error);
+          setArticle(null);
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+    
+    loadArticle();
+  }, [id]);
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -27,10 +44,27 @@ const BlogPost = () => {
 
   // If no article is found, redirect to blog page
   useEffect(() => {
-    if (!article) {
+    if (!loading && !article) {
       navigate("/blog");
     }
-  }, [article, navigate]);
+  }, [article, navigate, loading]);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <ProgressBar />
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4">Loading article...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!article) {
     return null;
@@ -93,29 +127,8 @@ const BlogPost = () => {
             </header>
 
             {/* Article content */}
-            <div className="prose prose-lg dark:prose-invert max-w-none" ref={contentRef}>
-              <Markdown remarkPlugins={[remarkGfm]}
-                components={{
-                  code(props) {
-                    const {children, className, node, ...rest} = props
-                    return (
-                      <code className={className} style={{overflowX: 'auto', display: 'block', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}} {...rest}>
-                        {children}
-                      </code>
-                    )
-                  },
-                  pre(props) {
-                    const {children, ...rest} = props
-                    return (
-                      <pre style={{overflowX: 'auto', maxWidth: '100%'}} {...rest}>
-                        {children}
-                      </pre>
-                    )
-                  }
-                }}
-              >
-                {article.content}
-              </Markdown>
+            <div ref={contentRef}>
+              <MDXContent content={article.content} />
             </div>
 
             {/* Tags */}

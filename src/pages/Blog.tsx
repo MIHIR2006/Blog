@@ -3,18 +3,54 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { articles } from "@/data/articles";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { Article, getAllTags, getArticles } from "@/lib/articles";
+import { useEffect, useState } from "react";
 
 const Blog = () => {
   useScrollToTop();
   
-  // Extract all unique tags from articles
-  const allTags = Array.from(
-    new Set(
-      articles.flatMap((article) => article.tags)
-    )
-  );
+  // State to store fetched articles
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch articles on component mount
+  useEffect(() => {
+    async function loadArticles() {
+      try {
+        const fetchedArticles = await getArticles();
+        setArticles(fetchedArticles);
+        
+        // Get unique tags
+        const tags = await getAllTags();
+        setAllTags(tags);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    loadArticles();
+  }, []);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <ProgressBar />
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4">Loading articles...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

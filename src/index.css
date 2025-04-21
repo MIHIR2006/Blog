@@ -134,3 +134,46 @@
     @apply inline-block min-w-full;
   }
 }
+
+/* Add these styles at the end of the file */
+
+/* Code blocks */
+pre {
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  background-color: #1e1e1e !important;
+  border: 1px solid #333;
+  padding: 1rem;
+}
+
+/* Inline code */
+:not(pre) > code {
+  background-color: rgba(135, 131, 120, 0.15);
+  color: #eb5757;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+/* Adjust code block padding */
+pre code {
+  padding: 0 !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  white-space: pre !important;
+}
+
+/* Fix line height in code blocks */
+pre code * {
+  font-family: 'Fira Code', monospace !important;
+  line-height: 1.5 !important;
+}
+
+/* Make sure code blocks break properly on small screens */
+.prose pre {
+  max-width: 100%;
+  word-break: break-word;
+  white-space: pre-wrap;
+}

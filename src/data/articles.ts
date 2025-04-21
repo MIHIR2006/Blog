@@ -11,7 +11,7 @@ export const articles = [
 
 Choosing the right language for backend development can be a game-changer, especially when it comes to scalability, maintainability, and team collaboration. In the world of JavaScript-based development, a frequent question is: **Should I use JavaScript or TypeScript for my backend?**
 
-In this post, we’ll break down both JavaScript (JS) and TypeScript (TS), focusing on performance, developer experience, ecosystem, and long-term viability—helping you choose the right tool for your backend project.
+In this post, we'll break down both JavaScript (JS) and TypeScript (TS), focusing on performance, developer experience, ecosystem, and long-term viability—helping you choose the right tool for your backend project.
 
 ## 1. Overview: JS and TS
 
@@ -33,7 +33,7 @@ Since TypeScript compiles down to JavaScript, both offer **similar runtime perfo
 
 - **JavaScript**: Very flexible, but that can be a double-edged sword. Dynamic typing can lead to bugs that only appear at runtime.
 
-- **TypeScript**: With static typing and better autocompletion, TS helps catch errors during development. It’s especially useful in large teams and long-term projects. IDE support (like VSCode) is much better with TS.
+- **TypeScript**: With static typing and better autocompletion, TS helps catch errors during development. It's especially useful in large teams and long-term projects. IDE support (like VSCode) is much better with TS.
 
 **Verdict**: **TypeScript wins** for maintainability and long-term code quality.
 
@@ -54,7 +54,7 @@ TypeScript helps by:
 
 - **TypeScript**: Has a learning curve due to its type system. However, if you already know JavaScript, learning TypeScript is quite straightforward.
 
-**Verdict**: **JavaScript wins** for ease of entry, but TypeScript isn’t far behind.
+**Verdict**: **JavaScript wins** for ease of entry, but TypeScript isn't far behind.
 
 ## 6. Ecosystem and Framework Support
 
@@ -67,7 +67,7 @@ Both languages use the **same Node.js ecosystem** and have access to popular bac
 
 TypeScript is now widely supported in all major backend frameworks. Tools like \`ts-node\` and \`esbuild\` also speed up development.
 
-**Verdict**: **Tie**, though TypeScript’s support is growing rapidly and is often preferred in modern backend frameworks like **NestJS**.
+**Verdict**: **Tie**, though TypeScript's support is growing rapidly and is often preferred in modern backend frameworks like **NestJS**.
 
 ## 7. Error Handling and Debugging
 
@@ -81,7 +81,7 @@ TypeScript is now widely supported in all major backend frameworks. Tools like \
 
 In large teams or organizations, code readability and maintainability become critical.
 
-- **TypeScript**: Makes collaboration easier by enforcing strict typing. Developers can understand each other’s code faster, and onboarding becomes smoother thanks to well-defined interfaces and types.
+- **TypeScript**: Makes collaboration easier by enforcing strict typing. Developers can understand each other's code faster, and onboarding becomes smoother thanks to well-defined interfaces and types.
 - **JavaScript**: While still collaborative, lacks enforced structure which can lead to inconsistencies across large codebases.
 
 **Verdict**: **TypeScript wins** in team-based environments.
@@ -89,7 +89,7 @@ In large teams or organizations, code readability and maintainability become cri
 ## 9. Tooling and Developer Productivity
 
 - **TypeScript**: Modern editors like VSCode offer powerful autocomplete, type checking, go-to-definition, and refactor features—boosting developer efficiency.
-- **JavaScript**: Also supports these tools, but the experience isn’t as accurate due to dynamic typing.
+- **JavaScript**: Also supports these tools, but the experience isn't as accurate due to dynamic typing.
 
 **Verdict**: **TypeScript wins** for tooling and productivity.
 
@@ -110,21 +110,21 @@ Many modern companies like **Airbnb**, **Slack**, and **Microsoft** have already
 ## Conclusion: Which One Should You Use?
 
 **Use JavaScript if:**
-- You’re building a small project or prototype.
+- You're building a small project or prototype.
 - You want fast iteration and less overhead.
-- You’re new to programming or want to build something quickly.
+- You're new to programming or want to build something quickly.
 
 **Use TypeScript if:**
-- You’re building a scalable, long-term backend project.
+- You're building a scalable, long-term backend project.
 - You work in a team and want safer, more maintainable code.
 - You want to catch bugs early and reduce runtime errors.
 
 ## Final Thoughts
 
-TypeScript is becoming the **industry standard** for professional backend development in the Node.js ecosystem. While JavaScript is still perfectly valid and widely used, more teams are migrating to TypeScript for its long-term benefits. TS is no longer just an add-on—it’s a major step forward in writing clean, reliable, and maintainable backend code.
+TypeScript is becoming the **industry standard** for professional backend development in the Node.js ecosystem. While JavaScript is still perfectly valid and widely used, more teams are migrating to TypeScript for its long-term benefits. TS is no longer just an add-on—it's a major step forward in writing clean, reliable, and maintainable backend code.
 
 **What do you prefer for your backend—JS or TS?**  
-Ping me on X and share your experience with me. Let’s keep the conversation going!
+Ping me on X and share your experience with me. Let's keep the conversation going!
 `,
     author: {
       name: "Mihir Goswami",
@@ -782,6 +782,34 @@ Remember: Security is not a feature but a requirement. It should be integrated i
       "Cybersecurity",
       "Best Practices",
     ],
+  },
+
+  {
+    id: "markdown-syntax-highlighting",
+    title: "Markdown & Syntax Highlighting in Web Development",
+    excerpt: "Learn how to effectively use Markdown with syntax highlighting to create beautiful documentation and code examples for your web projects.",
+    coverImage: "https://serokell.io/files/pm/pmzzkh71.Markdown_markup_language_pic1.jpg",
+    content: `# Markdown & Syntax Highlighting in Web Development
+
+*Create beautiful documentation and code examples with minimal effort*
+
+Markdown has become the de facto standard for writing documentation, READMEs, and even blog posts in the web development world. When combined with syntax highlighting, it creates an excellent reading experience for technical content.
+
+## Getting Started with Markdown
+
+Markdown is a lightweight markup language that allows you to write formatted content using plain text. It's designed to be easy to write and easy to read.
+
+(Content abbreviated for brevity - see full content in mdx-browser.ts)
+`,
+    author: {
+      name: "Mihir Goswami",
+      avatar: "./image/Mihir.png",
+      initials: "MG",
+      bio: "Technical writer and web developer with a passion for clear documentation.",
+    },
+    date: "Oct 21, 2024",
+    readTime: "8 min read",
+    tags: ["Markdown", "Syntax Highlighting", "Documentation", "Web Development", "MDX"],
   },
 ];
 
