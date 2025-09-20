@@ -1,23 +1,22 @@
-import { ArticleCard } from "@/components/ArticleCard";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { articles } from "@/data/articles";
-import { useScrollToTop } from "@/hooks/useScrollToTop";
-import { Link } from "react-router-dom";
+import { ArticleCard } from "@/components/ArticleCard"
+import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header"
+import { ProgressBar } from "@/components/ProgressBar"
+import { Button } from "@/components/ui/button"
+import { articles } from "@/data/articles"
+import Link from "next/link"
 
-const Index = () => {
-  useScrollToTop();
-
+export default function HomePage() {
   // Get the featured article (first one)
-  const featuredArticle = articles[0];
+  const featuredArticle = articles[0]
 
   // Get the rest of the articles
-  const recentArticles = articles.slice(1);
+  const recentArticles = articles.slice(1)
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      <ProgressBar />
 
       <main className="flex-grow">
         {/* Hero section */}
@@ -31,10 +30,10 @@ const Index = () => {
             </p>
             <div className="flex space-x-4">
               <Button asChild size="lg">
-                <Link to="/blog">Read Articles</Link>
+                <Link href="/blog">Read Articles</Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link to="/about">About Me</Link>
+                <Link href="/about">About Me</Link>
               </Button>
             </div>
           </div>
@@ -45,7 +44,7 @@ const Index = () => {
           <div className="container-medium">
             <div className="flex justify-between items-center mb-8">
               <h2 className="font-serif text-2xl font-bold">Featured Story</h2>
-              <Link to="/blog" className="text-muted-foreground hover:text-foreground text-sm">
+              <Link href="/blog" className="text-muted-foreground hover:text-foreground text-sm">
                 View all
               </Link>
             </div>
@@ -68,7 +67,7 @@ const Index = () => {
           <div className="container-medium">
             <div className="flex justify-between items-center mb-8">
               <h2 className="font-serif text-2xl font-bold">Latest Stories</h2>
-              <Link to="/blog" className="text-muted-foreground hover:text-foreground text-sm">
+              <Link href="/blog" className="text-muted-foreground hover:text-foreground text-sm">
                 View all
               </Link>
             </div>
@@ -93,7 +92,5 @@ const Index = () => {
 
       <Footer />
     </div>
-  );
-};
-
-export default Index;
+  )
+}

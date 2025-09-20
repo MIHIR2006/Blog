@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/command";
 import { useSearch } from "@/hooks/useSearch";
 import { ArrowRightIcon, Loader2, SearchIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export function SearchCommand({
   open,
@@ -19,7 +19,7 @@ export function SearchCommand({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const { results, isLoading } = useSearch(query);
 
@@ -77,7 +77,7 @@ export function SearchCommand({
                 <CommandItem
                   key={result.id}
                   onSelect={() => {
-                    navigate(`/blog/${result.id}`);
+                    router.push(`/blog/${result.id}`);
                     setOpen(false);
                   }}
                   className="flex flex-col items-start"
@@ -92,7 +92,7 @@ export function SearchCommand({
               {results.length > 5 && (
                 <CommandItem
                   onSelect={() => {
-                    navigate(`/search?q=${encodeURIComponent(query)}`);
+                    router.push(`/search?q=${encodeURIComponent(query)}`);
                     setOpen(false);
                   }}
                   className="justify-center text-sm text-muted-foreground hover:text-foreground"
@@ -110,7 +110,7 @@ export function SearchCommand({
                 <CommandItem
                   key={tag}
                   onSelect={() => {
-                    navigate(`/blog?tag=${encodeURIComponent(tag)}`);
+                    router.push(`/blog?tag=${encodeURIComponent(tag)}`);
                     setOpen(false);
                   }}
                 >
@@ -124,7 +124,7 @@ export function SearchCommand({
             <CommandGroup>
               <CommandItem
                 onSelect={() => {
-                  navigate(`/search?q=${encodeURIComponent(query)}`);
+                  router.push(`/search?q=${encodeURIComponent(query)}`);
                   setOpen(false);
                 }}
                 className="justify-between"
