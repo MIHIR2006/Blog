@@ -1,14 +1,9 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ],
+  "framework": "nextjs",
   "buildCommand": "npm run build",
-  "installCommand": "npm install --include=dev",
-  "framework": "vite",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
   "env": {
-    "ROLLUP_SKIP_LOAD_NATIVE_PLUGIN": "true",
-    "SWC_BINARY_PATH": "/tmp/swc-binary",
-    "ESBUILD_BINARY_PATH": "/tmp/esbuild-binary",
     "NODE_OPTIONS": "--max-old-space-size=4096"
   }
 }
