@@ -1,39 +1,41 @@
-import { ArticleCard } from "@/components/ArticleCard";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { ProgressBar } from "@/components/ProgressBar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useScrollToTop } from "@/hooks/useScrollToTop";
-import { Article, getAllTags, getArticles } from "@/lib/articles";
-import { useEffect, useState } from "react";
+'use client'
 
-const Blog = () => {
-  useScrollToTop();
+import { ArticleCard } from "@/components/ArticleCard"
+import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header"
+import { ProgressBar } from "@/components/ProgressBar"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useScrollToTop } from "@/hooks/useScrollToTop"
+import { Article, getAllTags, getArticles } from "@/lib/articles"
+import { useEffect, useState } from "react"
+
+export default function BlogPage() {
+  useScrollToTop()
   
   // State to store fetched articles
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [allTags, setAllTags] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState<Article[]>([])
+  const [allTags, setAllTags] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
 
   // Fetch articles on component mount
   useEffect(() => {
     async function loadArticles() {
       try {
-        const fetchedArticles = await getArticles();
-        setArticles(fetchedArticles);
+        const fetchedArticles = await getArticles()
+        setArticles(fetchedArticles)
         
         // Get unique tags
-        const tags = await getAllTags();
-        setAllTags(tags);
+        const tags = await getAllTags()
+        setAllTags(tags)
       } catch (error) {
-        console.error("Error fetching articles:", error);
+        console.error("Error fetching articles:", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
     
-    loadArticles();
-  }, []);
+    loadArticles()
+  }, [])
 
   // Show loading state
   if (loading) {
@@ -49,7 +51,7 @@ const Blog = () => {
         </div>
         <Footer />
       </div>
-    );
+    )
   }
 
   return (
@@ -132,7 +134,5 @@ const Blog = () => {
 
       <Footer />
     </div>
-  );
-};
-
-export default Blog;
+  )
+}

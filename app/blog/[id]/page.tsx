@@ -1,53 +1,56 @@
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import MDXContent from "@/components/MDXContent";
-import { ProgressBar } from "@/components/ProgressBar";
-import { ShareButtons } from "@/components/ShareButtons";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Article, getArticleById } from "@/lib/articles";
-import { ArrowLeft } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+'use client'
 
-const BlogPost = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [article, setArticle] = useState<Article | null>(null);
-  const [loading, setLoading] = useState(true);
+import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header"
+import MDXContent from "@/components/MDXContent"
+import { ProgressBar } from "@/components/ProgressBar"
+import { ShareButtons } from "@/components/ShareButtons"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { Article, getArticleById } from "@/lib/articles"
+import { ArrowLeft } from "lucide-react"
+import Image from "next/image"
+import { useParams, useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+
+export default function BlogPostPage() {
+  const { id } = useParams<{ id: string }>()
+  const router = useRouter()
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [article, setArticle] = useState<Article | null>(null)
+  const [loading, setLoading] = useState(true)
 
   // Fetch article when component mounts or id changes
   useEffect(() => {
     async function loadArticle() {
       if (id) {
         try {
-          const fetchedArticle = await getArticleById(id);
-          setArticle(fetchedArticle || null);
+          const fetchedArticle = await getArticleById(id)
+          setArticle(fetchedArticle || null)
         } catch (error) {
-          console.error("Error fetching article:", error);
-          setArticle(null);
+          console.error("Error fetching article:", error)
+          setArticle(null)
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
       }
     }
     
-    loadArticle();
-  }, [id]);
+    loadArticle()
+  }, [id])
 
   // Scroll to top when component mounts
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+    window.scrollTo(0, 0)
+  }, [id])
 
   // If no article is found, redirect to blog page
   useEffect(() => {
     if (!loading && !article) {
-      navigate("/blog");
+      router.push("/blog")
     }
-  }, [article, navigate, loading]);
+  }, [article, router, loading])
 
   // Show loading state
   if (loading) {
@@ -63,11 +66,11 @@ const BlogPost = () => {
         </div>
         <Footer />
       </div>
-    );
+    )
   }
 
   if (!article) {
-    return null;
+    return null
   }
 
   return (
@@ -83,7 +86,7 @@ const BlogPost = () => {
               variant="ghost"
               size="sm"
               className="mb-8"
-              onClick={() => navigate("/blog")}
+              onClick={() => router.push("/blog")}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
@@ -112,9 +115,11 @@ const BlogPost = () => {
 
               {/* Cover image */}
               <div className="overflow-hidden rounded-lg mb-8 aspect-[16/9]">
-                <img
+                <Image
                   src={article.coverImage}
                   alt={article.title}
+                  width={1200}
+                  height={675}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -122,7 +127,7 @@ const BlogPost = () => {
               {/* Share buttons */}
               <ShareButtons
                 title={article.title}
-                url={window.location.href}
+                url={typeof window !== 'undefined' ? window.location.href : ''}
               />
             </header>
 
@@ -165,7 +170,7 @@ const BlogPost = () => {
             {/* Share buttons (bottom) */}
             <ShareButtons
               title={article.title}
-              url={window.location.href}
+              url={typeof window !== 'undefined' ? window.location.href : ''}
             />
           </div>
         </article>
@@ -173,7 +178,5 @@ const BlogPost = () => {
 
       <Footer />
     </div>
-  );
-};
-
-export default BlogPost;
+  )
+}

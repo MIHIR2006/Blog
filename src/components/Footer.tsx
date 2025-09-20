@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { CodeXml, Coffee, Github, Instagram, Linkedin, Twitter } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -18,17 +18,17 @@ export function Footer() {
             <h3 className="font-playfair text-xl font-bold mb-4">Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
                   About
                 </Link>
               </li>

@@ -349,7 +349,7 @@ Remember that **the best language depends entirely on your specific project requ
 Which language are you leaning toward? Let me know your thoughts and experiences with either Go or Rust!`,
     author: {
       name: "Mihir Goswami",
-      avatar: "./image/Mihir.png",
+      avatar: "/images/Mihir.png",
       initials: "MG",
       bio: "Systems programmer with experience in Go and Rust development.",
     },
@@ -486,7 +486,7 @@ Ping me on X and share your experience with me. Let's keep the conversation goin
 `,
     author: {
       name: "Mihir Goswami",
-      avatar: "./image/Mihir.png",
+      avatar: "/images/Mihir.png",
       initials: "MG",
       bio: "Web developer passionate about JavaScript, TypeScript, and modern web technologies.",
     },
@@ -631,7 +631,7 @@ Remember: the best API architecture is the one that solves your specific problem
     `,
     author: {
       name: "Mihir Goswami",
-      avatar: "./image/Mihir.png",
+      avatar: "/images/Mihir.png",
       initials: "MG",
       bio: "Senior Backend Developer with 8+ years of API design experience.",
     },
@@ -857,7 +857,7 @@ Remember that security is a journey, not a destination. Regular audits and updat
     `,
     author: {
       name: "Mihir Goswami",
-      avatar: "./image/Mihir.png",
+      avatar: "/images/Mihir.png",
       initials: "MG",
       bio: "Security Engineer specializing in authentication systems and identity management.",
     },
@@ -1127,7 +1127,7 @@ Remember: Security is not a feature but a requirement. It should be integrated i
     `,
     author: {
       name: "Mihir Goswami",
-      avatar: "./image/Mihir.png",
+      avatar: "/images/Mihir.png",
       initials: "MG",
       bio: "Cybersecurity specialist with 10+ years of experience securing web applications and API infrastructures.",
     },
@@ -1161,7 +1161,7 @@ Markdown is a lightweight markup language that allows you to write formatted con
 `,
     author: {
       name: "Mihir Goswami",
-      avatar: "./image/Mihir.png",
+      avatar: "/images/Mihir.png",
       initials: "MG",
       bio: "Technical writer and web developer with a passion for clear documentation.",
     },

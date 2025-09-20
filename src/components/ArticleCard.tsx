@@ -1,8 +1,9 @@
 
-import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
 
 interface Author {
   name: string;
@@ -37,11 +38,13 @@ export function ArticleCard({
 }: ArticleCardProps) {
   return (
     <article className={cn("group animate-fade-in rounded-lg overflow-hidden bg-card border border-border", className)}>
-      <Link to={`/blog/${id}`} className="block">
+      <Link href={`/blog/${id}`} className="block">
         <div className={cn("overflow-hidden", featured ? "aspect-[16/9]" : "aspect-[16/10]")}>
-          <img
+          <Image
             src={coverImage}
             alt={title}
+            width={800}
+            height={featured ? 450 : 500}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
@@ -58,7 +61,7 @@ export function ArticleCard({
           </div>
         )}
         
-        <Link to={`/blog/${id}`}>
+        <Link href={`/blog/${id}`}>
           <h2 className={cn("font-serif font-bold tracking-tight hover:text-primary/90 transition-colors", 
             featured ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"
           )}>

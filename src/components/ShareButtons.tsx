@@ -1,7 +1,9 @@
 
-import { Twitter, Linkedin, Facebook, Link as LinkIcon } from "lucide-react";
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { Facebook, Linkedin, Link as LinkIcon, Twitter } from "lucide-react";
 
 interface ShareButtonsProps {
   title: string;

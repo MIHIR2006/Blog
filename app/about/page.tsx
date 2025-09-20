@@ -1,25 +1,28 @@
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { useScrollToTop } from "@/hooks/useScrollToTop";
-import Profile from "@/data/image/MihirProfile.jpg";
+'use client'
 
-const About = () => {
-  useScrollToTop();
+import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header"
+import { ProgressBar } from "@/components/ProgressBar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Separator } from "@/components/ui/separator"
+import { useScrollToTop } from "@/hooks/useScrollToTop"
+
+export default function AboutPage() {
+  useScrollToTop()
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      <ProgressBar />
 
       <main className="flex-grow">
         <div className="container-medium py-12">
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-8">About Me</h1>
 
           <section className="mb-12 text-justify">
-            <h2 className="font-serif text-2xl font-bold mb-4">Hey there, I'm Mihir</h2>
+            <h2 className="font-serif text-2xl font-bold mb-4">Hey there, I&apos;m Mihir</h2>
             <p className="text-lg text-muted-foreground mb-4">
-              i am student pursuing a Bachelor's degree in Computer Science. I possess a significant interest in Software Development and am continuously seeking to broaden my understanding within the dynamic field of technology.
+              i am student pursuing a Bachelor&apos;s degree in Computer Science. I possess a significant interest in Software Development and am continuously seeking to broaden my understanding within the dynamic field of technology.
               My current experience includes practical application of the MERN stack in building web applications. Furthermore, I am actively engaged in learning various web technologies and exploring areas such as Web 3 and system design.
             </p>
             <p className="text-lg text-muted-foreground">
@@ -33,7 +36,7 @@ const About = () => {
             <h2 className="font-serif text-2xl font-bold mb-6">About the Author</h2>
             <div className="flex items-start gap-6 flex-col md:flex-row">
               <Avatar className="h-24 w-24">
-                <AvatarImage src={Profile} alt="Mihir Goswami" />
+                <AvatarImage src="/images/MihirProfile.jpg" alt="Mihir Goswami" />
                 <AvatarFallback>MG</AvatarFallback>
               </Avatar>
               <div>
@@ -56,39 +59,39 @@ const About = () => {
             <h2 className="font-serif text-2xl font-bold mb-4">Content Focus</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="border rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-3">Frontend Development</h3>
+                <h3 className="text-xl font-bold mb-3"> Web Dev</h3>
                 <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li>JavaScript and TypeScript</li>
-                  <li>Modern frameworks and libraries</li>
-                  <li>UI/UX best practices</li>
+                  <li>JavaScript TypeScript Rust Go</li>
+                  <li>frameworks and libraries state management</li>
+                  <li>Next js,Gsap,Framer</li>
                   <li>Performance optimization</li>
                 </ul>
               </div>
               <div className="border rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-3">Backend Development</h3>
+                <h3 className="text-xl font-bold mb-3">Web 3</h3>
                 <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li>API design and architecture</li>
-                  <li>Authentication and authorization</li>
-                  <li>Database management</li>
-                  <li>Server-side performance</li>
+                  <li>Smart contracts</li>
+                  <li>Blockchain fundamentals (Ethereum, EVM)</li>
+                  <li>Decentralized apps (dApps) development</li>
+                  <li>Defi (Decentralized Finance)</li>
                 </ul>
               </div>
               <div className="border rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-3">Security</h3>
+                <h3 className="text-xl font-bold mb-3">System Design</h3>
                 <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li>Web application security</li>
-                  <li>Secure coding practices</li>
-                  <li>Common vulnerabilities and mitigations</li>
-                  <li>Security auditing and testing</li>
+                  <li>Scalable architecture patterns</li>
+                  <li>Load balancing and caching strategies</li>
+                  <li>Database design and data flow</li>
+                  <li>High availability and fault tolerance</li>
                 </ul>
               </div>
               <div className="border rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-3">Best Practices</h3>
+                <h3 className="text-xl font-bold mb-3">Ui taste</h3>
                 <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li>Code organization and architecture</li>
-                  <li>Testing strategies</li>
-                  <li>Deployment and DevOps</li>
-                  <li>Continuous learning resources</li>
+                  <li>Cool UI Stuffs</li>
+                  <li>Micro-interactions and animations</li>
+                  <li>Pixel-perfect implementation</li>
+                  <li>Minimalism and intuitive design</li>
                 </ul>
               </div>
             </div>
@@ -122,7 +125,5 @@ const About = () => {
 
       <Footer />
     </div>
-  );
-};
-
-export default About;
+  )
+}

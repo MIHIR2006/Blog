@@ -128,18 +128,7 @@ export const MDXContent = ({ content }: MDXContentProps) => {
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
 
-  useEffect(() => {
-    // Dynamically import the appropriate highlight.js theme based on the current theme
-    const loadSyntaxTheme = async () => {
-      if (theme === 'dark') {
-        await import('highlight.js/styles/github-dark.css');
-      } else {
-        await import('highlight.js/styles/github.css');
-      }
-    };
-    
-    loadSyntaxTheme();
-  }, [theme]);
+  // CSS themes are now imported globally
 
   useEffect(() => {
     const processMdx = async () => {

@@ -1,9 +1,12 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Menu, Search, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
@@ -11,11 +14,11 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   
   // Check if current route is search page
-  const isSearchPage = location.pathname === '/search';
+  const isSearchPage = pathname === '/search';
 
   const handleOpenSearch = useCallback(() => {
     if (!isSearchPage) {
@@ -58,11 +61,11 @@ export function Header() {
     e.preventDefault();
     if (searchQuery.trim()) {
       setIsSearchOpen(false);
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       // Reset search query after navigation
       setSearchQuery("");
     }
-  }, [searchQuery, navigate]);
+  }, [searchQuery, router]);
 
   const handleSearchInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -81,7 +84,7 @@ export function Header() {
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             <span className="sr-only">Toggle menu</span>
           </Button>
-          <Link to="/" className="flex items-center">
+          <Link href="/" className="flex items-center">
 <span className="font-serif text-xl font-bold">Blogs</span>
           </Link>
         </div>
@@ -89,17 +92,17 @@ export function Header() {
         <nav className={`${isMenuOpen ? 'absolute top-16 left-0 right-0 border-b border-border bg-background p-4 md:p-0 shadow-md md:shadow-none' : 'hidden'} md:block`}>
           <ul className={`flex ${isMenuOpen ? 'flex-col space-y-4' : 'flex-row space-x-6'}`}>
             <li>
-              <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                 Blog
               </Link>
             </li>
             <li>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
                 About
               </Link>
             </li>
