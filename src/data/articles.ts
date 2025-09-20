@@ -364,7 +364,7 @@ Which language are you leaning toward? Let me know your thoughts and experiences
     excerpt:
       "Understanding the key differences, benefits, and use cases of JavaScript and TypeScript in modern web development.",
     coverImage:
-      "https://images.ctfassets.net/6e7jqm4y92l8/5nzwwMXuigK9Bj1Z9zH5ZR/2ee18f6d393a3e814b23f30fb1c7deb3/210407_MB_blog_cover_TSvsJS.jpg",
+      "/images/TSvsJS.jpg",
     content: `# JavaScript vs TypeScript Backend
 
 Choosing the right language for backend development can be a game-changer, especially when it comes to scalability, maintainability, and team collaboration. In the world of JavaScript-based development, a frequent question is: **Should I use JavaScript or TypeScript for my backend?**
@@ -500,8 +500,7 @@ Ping me on X and share your experience with me. Let's keep the conversation goin
     title: "REST API vs. GraphQL: Which One Should You Use?",
     excerpt:
       "A comprehensive comparison of REST and GraphQL architectures to help you make the right choice for your next project.",
-    coverImage:
-      "https://blog.postman.com/wp-content/uploads/2023/12/GraphQL-vs-REST-1.jpg",
+    coverImage: "/images/GraphQL-vs-REST.webp",
     content: `
 # REST API vs. GraphQL: Which One Should You Use?
 
@@ -645,8 +644,7 @@ Remember: the best API architecture is the one that solves your specific problem
     title: "Getting Started with Authentication and Authorization",
     excerpt:
       "Learn the fundamentals of securing user access to your applications with proper authentication and authorization techniques.",
-    coverImage:
-  "https://us-west-2.graphassets.com/AuGrs0mztRH6ldTYKJkSAz/resize=width:2402,height:1431/Lsa2537QZ2N7RCgY1nZQ",
+    coverImage: "/images/authetnication_vs_authorization.png",
     content: `
 # Getting Started with Authentication and Authorization
 
@@ -878,7 +876,7 @@ Remember that security is a journey, not a destination. Regular audits and updat
     excerpt:
       "Learn essential security practices to protect your web applications from common vulnerabilities and attacks.",
     coverImage:
-      "https://thedigitaleducation.org/wp-content/uploads/2023/11/what-is-web-security-and-why-Its-important-1-768x427.jpg",
+      "/images/Website-Security.jpg",
     content: `
 # How to Secure Your Web App: A Backend Developer's Guide
 
