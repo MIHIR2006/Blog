@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
   },
   define: {
     'process.env': process.env,
-    'process.cwd': () => JSON.stringify(process.cwd()),
+    'process.cwd': JSON.stringify(process.cwd()),
   },
   build: {
     rollupOptions: {
