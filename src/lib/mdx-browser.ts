@@ -1375,6 +1375,89 @@ Securing web applications requires a multi-layered approach and continuous vigil
 
 Remember: Security is not a feature but a requirement. It should be integrated into every stage of your development process, from design to deployment and beyond.`
   },
+  'vibecommit-npm-package': {
+    frontmatter: {
+      id: 'vibecommit-npm-package',
+      title: 'Introducing VibeCommit: Streamline Your Git Commit Messages',
+      excerpt: 'A lightweight npm package that makes clean, standardized commit messages simple and fast. Learn how VibeCommit can improve your Git workflow with minimal configuration.',
+      coverImage: '/images/Commit.webp',
+      date: 'Dec 20, 2024',
+      readTime: '6 min read',
+      author: {
+        name: 'Mihir Goswami',
+        avatar: '/images/Mihir.png',
+        initials: 'MG',
+        bio: 'Full-stack developer passionate about creating tools that improve developer experience and workflow efficiency.',
+      },
+      tags: ['Git', 'Commit', 'Conventional Commits', 'CLI', 'Developer Tools', 'Workflow', 'Automation', 'VibeCommit'],
+    },
+    content: `# Introducing VibeCommit: Streamline Your Git Commit Messages
+
+*Making clean, standardized commit messages simple and fast*
+
+I used to commit manually, adding prefixes like feat, chore, or prod and scopes to my Git messages. It worked, but it was repetitive and prone to mistakes. I thought there must be a tool to automate this, so I looked into existing solutions like git-conventional-commits and commitlint. They were powerful but required extensive configuration, which felt like overkill for my needs. So, I created VibeCommit, my own npm package to make clean, standardized commit messages simple and fast.
+
+VibeCommit is a lightweight tool designed to streamline Git commit messages with standard prefixes like feat, fix, docs, build, chore, ci, perf, refactor, revert, style, test, and prod. It's built to be minimal, with sensible defaults and just enough customization to fit most workflows.
+
+You can find it on GitHub at https://github.com/MIHIR2006/vibe-commit and npm at https://www.npmjs.com/package/vibecommit.
+
+## Installation
+
+To install VibeCommit globally, run:
+
+\`\`\`bash
+npm install -g vibecommit
+\`\`\`
+
+## Basic Usage
+
+Stage your changes and run the CLI:
+
+\`\`\`bash
+git add .
+\`\`\`
+
+Then run:
+
+\`\`\`bash
+vibecommit
+\`\`\`
+
+The tool prompts you to select a type, optionally add a scope, and write a short message.
+
+### Example outputs
+
+\`\`\`
+feat(ui): add hover effect on navigation button
+\`\`\`
+
+\`\`\`
+fix: resolve spacing issue in layout
+\`\`\`
+
+\`\`\`
+prod: configure production build settings
+\`\`\`
+
+## Customization
+
+Add a \`vibecommit\` block in your project's package.json:
+
+\`\`\`json
+{
+  "vibecommit": {
+    "types": ["feat", "fix", "docs", "chore", "prod"],
+    "scopes": ["ui", "api", "docs"]
+  }
+}
+\`\`\`
+
+## Keywords
+
+git, commit, conventional-commits, git-commit, commit-message, cli, developer-tools, workflow, automation, vibecommit
+
+VibeCommit is designed for developers who want a fast, no-fuss way to enforce Conventional Commits without complex setup. It's lightweight, dependency-free, and integrates seamlessly with your Git workflow.`
+  },
   'markdown-syntax-highlighting': {
     frontmatter: {
       id: 'markdown-syntax-highlighting',

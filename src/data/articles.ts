@@ -1141,6 +1141,225 @@ Remember: Security is not a feature but a requirement. It should be integrated i
   },
 
   {
+    id: "vibecommit-npm-package",
+    title: "Introducing VibeCommit: Streamline Your Git Commit Messages",
+    excerpt: "A lightweight npm package that makes clean, standardized commit messages simple and fast. Learn how VibeCommit can improve your Git workflow with minimal configuration.",
+    coverImage: "/images/Commit.webp",
+    content: `# Introducing VibeCommit: Streamline Your Git Commit Messages
+
+*Making clean, standardized commit messages simple and fast*
+
+I used to commit manually, adding prefixes like feat, chore, or prod and scopes to my Git messages. It worked, but it was repetitive and prone to mistakes. I thought there must be a tool to automate this, so I looked into existing solutions like git-conventional-commits and commitlint. They were powerful but required extensive configuration, which felt like overkill for my needs. So, I created VibeCommit, my own npm package to make clean, standardized commit messages simple and fast.
+
+VibeCommit is a lightweight tool designed to streamline Git commit messages with standard prefixes like feat, fix, docs, build, chore, ci, perf, refactor, revert, style, test, and prod. It's built to be minimal, with sensible defaults and just enough customization to fit most workflows.
+
+## What is VibeCommit?
+
+VibeCommit is a command-line tool that helps you create consistent, conventional commit messages without the complexity of other solutions. It provides an interactive interface that guides you through creating properly formatted commit messages.
+
+You can find it on GitHub at [https://github.com/MIHIR2006/vibe-commit](https://github.com/MIHIR2006/vibe-commit) and npm at [https://www.npmjs.com/package/vibecommit](https://www.npmjs.com/package/vibecommit).
+
+## Installation
+
+To install VibeCommit globally, run:
+
+\`\`\`bash
+npm install -g vibecommit
+\`\`\`
+
+## Basic Usage
+
+Using VibeCommit is straightforward. First, stage your changes in any Git repository:
+
+\`\`\`bash
+git add .
+\`\`\`
+
+Then run:
+
+\`\`\`bash
+vibecommit
+\`\`\`
+
+The tool will prompt you to:
+1. Select a commit type (e.g., feat, fix, chore)
+2. Optionally add a scope (e.g., ui, api, docs)
+3. Write a short, descriptive message
+
+## Example Outputs
+
+Here are some example commit messages that VibeCommit generates:
+
+**With a scope:**
+\`\`\`
+feat(ui): add hover effect on navigation button
+\`\`\`
+
+**Without a scope:**
+\`\`\`
+fix: resolve spacing issue in layout
+\`\`\`
+
+**Production-related commit:**
+\`\`\`
+prod: configure production build settings
+\`\`\`
+
+## Customization
+
+You can customize commit types and scopes in your project's package.json:
+
+\`\`\`json
+{
+  "vibecommit": {
+    "types": ["feat", "fix", "docs", "chore", "prod"],
+    "scopes": ["ui", "api", "docs"]
+  }
+}
+\`\`\`
+
+This allows you to tailor VibeCommit to your specific project needs while maintaining consistency across your team.
+
+## Supported Commit Types
+
+VibeCommit supports the following standard commit types:
+
+- **feat**: A new feature
+- **fix**: A bug fix
+- **docs**: Documentation only changes
+- **style**: Changes that do not affect the meaning of the code
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **perf**: A code change that improves performance
+- **test**: Adding missing tests or correcting existing tests
+- **build**: Changes that affect the build system or external dependencies
+- **ci**: Changes to our CI configuration files and scripts
+- **chore**: Other changes that don't modify src or test files
+- **revert**: Reverts a previous commit
+- **prod**: Production-related changes
+
+## Why Choose VibeCommit?
+
+### Lightweight and Fast
+VibeCommit has minimal dependencies and starts quickly, making it perfect for frequent use during development.
+
+### Zero Configuration
+Works out of the box with sensible defaults. No complex setup required.
+
+### Interactive Interface
+The tool guides you through creating commit messages step by step, reducing the chance of errors.
+
+### Consistent Formatting
+Ensures all commit messages follow the conventional commit format, making your Git history clean and readable.
+
+### Team-Friendly
+Easy to adopt across teams with minimal learning curve.
+
+## Integration with Git Workflow
+
+VibeCommit integrates seamlessly with your existing Git workflow:
+
+\`\`\`bash
+# Stage your changes
+git add .
+
+# Use VibeCommit to create a commit message
+vibecommit
+
+# Push your changes
+git push origin main
+\`\`\`
+
+## Advanced Usage
+
+For more advanced usage, you can also use VibeCommit with specific options:
+
+\`\`\`bash
+# Skip the interactive prompt and use defaults
+vibecommit --quick
+
+# Specify a custom scope
+vibecommit --scope api
+
+# Use a specific commit type
+vibecommit --type fix
+\`\`\`
+
+## Best Practices
+
+When using VibeCommit, follow these best practices:
+
+1. **Be descriptive**: Write clear, concise commit messages
+2. **Use present tense**: Write in imperative mood ("add feature" not "added feature")
+3. **Keep it short**: The first line should be 50 characters or less
+4. **Add details**: Use the body to explain what and why, not how
+5. **Be consistent**: Use the same format across your project
+
+## Comparison with Other Tools
+
+| Feature | VibeCommit | commitlint | git-conventional-commits |
+|---------|------------|------------|-------------------------|
+| **Setup Complexity** | Minimal | High | Medium |
+| **Configuration** | Optional | Required | Required |
+| **Interactive Mode** | Yes | No | No |
+| **Learning Curve** | Low | Medium | Medium |
+| **Dependencies** | Minimal | Many | Many |
+
+## Getting Started
+
+Ready to improve your commit messages? Here's how to get started:
+
+1. **Install VibeCommit:**
+   \`\`\`bash
+   npm install -g vibecommit
+   \`\`\`
+
+2. **Navigate to your Git repository:**
+   \`\`\`bash
+   cd your-project
+   \`\`\`
+
+3. **Stage your changes:**
+   \`\`\`bash
+   git add .
+   \`\`\`
+
+4. **Run VibeCommit:**
+   \`\`\`bash
+   vibecommit
+   \`\`\`
+
+5. **Follow the prompts** to create your commit message
+
+## Contributing
+
+VibeCommit is open source and welcomes contributions! You can:
+
+- Report bugs on GitHub
+- Suggest new features
+- Submit pull requests
+- Help improve documentation
+
+Visit the [GitHub repository](https://github.com/MIHIR2006/vibe-commit) to get involved.
+
+## Conclusion
+
+VibeCommit is designed for developers who want a fast, no-fuss way to enforce Conventional Commits without complex setup. It's lightweight, dependency-free, and integrates seamlessly with your Git workflow.
+
+Whether you're working solo or as part of a team, VibeCommit can help you maintain clean, consistent commit messages that make your Git history more readable and professional.
+
+Check out the full README on GitHub for more details and advanced usage examples. Start using VibeCommit today and see how it can improve your development workflow!`,
+    author: {
+      name: "Mihir Goswami",
+      avatar: "/images/Mihir.png",
+      initials: "MG",
+      bio: "Full-stack developer passionate about creating tools that improve developer experience and workflow efficiency.",
+    },
+    date: "Dec 20, 2024",
+    readTime: "6 min read",
+    tags: ["Git", "Commit", "Conventional Commits", "CLI", "Developer Tools", "Workflow", "Automation", "VibeCommit"],
+  },
+
+  {
     id: "markdown-syntax-highlighting",
     title: "Markdown & Syntax Highlighting in Web Development",
     excerpt: "Learn how to effectively use Markdown with syntax highlighting to create beautiful documentation and code examples for your web projects.",
