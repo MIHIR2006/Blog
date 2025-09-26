@@ -1,25 +1,5 @@
-// Define types locally since we deleted the mdx.ts file
-export interface ArticleFrontmatter {
-  id: string;
-  title: string;
-  excerpt: string;
-  coverImage: string;
-  date: string;
-  readTime: string;
-  author: {
-    name: string;
-    avatar: string;
-    initials: string;
-    bio: string;
-  };
-  tags: string[];
-}
-
-export interface MDXArticle {
-  frontmatter: ArticleFrontmatter;
-  slug: string;
-  content: string;
-}
+import { getArticleRecord, getAllArticleSlugs as getSlugs } from "./mdx-data";
+import { ArticleFrontmatter, MDXArticle } from "./mdx-types";
 
 // Pre-processed article data 
 // This approach avoids trying to directly import or fetch MDX files
@@ -1853,18 +1833,20 @@ Start small with basic Markdown and simple syntax highlighting, then gradually i
 
 // Get all article slugs
 export function getAllArticleSlugs(): string[] {
-  return Object.keys(ARTICLES_DATA);
+  // Prefer centralized data source; fallback to local if empty
+  const centralized = getSlugs?.() ?? [];
+  return centralized.length ? centralized : Object.keys(ARTICLES_DATA);
 }
 
 // Get an MDX article by slug
 export async function getArticleBySlug(slug: string): Promise<MDXArticle | null> {
   try {
-    if (!ARTICLES_DATA[slug]) {
+    const fromCentral = getArticleRecord?.(slug);
+    const articleData = fromCentral ?? ARTICLES_DATA[slug];
+    if (!articleData) {
       console.error(`Article data for slug "${slug}" not found`);
       return null;
     }
-
-    const articleData = ARTICLES_DATA[slug];
     
     return {
       frontmatter: articleData.frontmatter,

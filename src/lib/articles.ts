@@ -1,5 +1,5 @@
 import { fallbackArticles } from "@/data/fallback-articles"; // Keep the original articles as fallback
-import { MDXArticle } from "./mdx-browser";
+import { MDXArticle } from "./mdx-types";
 
 // Interface matching the format expected by our existing components
 export interface Article {
