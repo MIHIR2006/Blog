@@ -1379,9 +1379,13 @@ I used to commit manually, adding prefixes like feat, chore, or prod and scopes 
 
 VibeCommit is a lightweight tool designed to streamline Git commit messages with standard prefixes like feat, fix, docs, build, chore, ci, perf, refactor, revert, style, test, and prod. It's built to be minimal, with sensible defaults and just enough customization to fit most workflows.
 
-You can find it on GitHub at https://github.com/MIHIR2006/vibe-commit and npm at https://www.npmjs.com/package/vibecommit.
+## What is VibeCommit?
 
-## Installation
+VibeCommit is a command-line tool that helps you create consistent, conventional commit messages without the complexity of other solutions. It provides an interactive interface that guides you through creating properly formatted commit messages.
+
+You can find it on GitHub at [https://github.com/MIHIR2006/vibe-commit](https://github.com/MIHIR2006/vibe-commit) and npm at [https://www.npmjs.com/package/vibecommit](https://www.npmjs.com/package/vibecommit).
+
+## Installation & Basic Usage
 
 To install VibeCommit globally, run:
 
@@ -1389,39 +1393,31 @@ To install VibeCommit globally, run:
 npm install -g vibecommit
 \`\`\`
 
-## Basic Usage
-
-Stage your changes and run the CLI:
+Using VibeCommit is straightforward. First, stage your changes in any Git repository:
 
 \`\`\`bash
 git add .
-\`\`\`
-
-Then run:
-
-\`\`\`bash
 vibecommit
 \`\`\`
 
-The tool prompts you to select a type, optionally add a scope, and write a short message.
+The tool will prompt you to:
+1. Select a commit type (e.g., feat, fix, chore)
+2. Optionally add a scope (e.g., ui, api, docs)
+3. Write a short, descriptive message
 
-### Example outputs
+## Example Outputs
+
+Here are some example commit messages that VibeCommit generates:
 
 \`\`\`
 feat(ui): add hover effect on navigation button
-\`\`\`
-
-\`\`\`
 fix: resolve spacing issue in layout
-\`\`\`
-
-\`\`\`
 prod: configure production build settings
 \`\`\`
 
 ## Customization
 
-Add a \`vibecommit\` block in your project's package.json:
+You can customize commit types and scopes in your project's package.json:
 
 \`\`\`json
 {
@@ -1432,11 +1428,101 @@ Add a \`vibecommit\` block in your project's package.json:
 }
 \`\`\`
 
-## Keywords
+## Understanding Commit Message Types
 
-git, commit, conventional-commits, git-commit, commit-message, cli, developer-tools, workflow, automation, vibecommit
+Each commit type serves a specific purpose in maintaining a clean and organized Git history:
 
-VibeCommit is designed for developers who want a fast, no-fuss way to enforce Conventional Commits without complex setup. It's lightweight, dependency-free, and integrates seamlessly with your Git workflow.`
+### feat: A new feature for the user or a significant addition to the application.
+
+Use \\\`feat\\\` when you're adding new functionality that users will interact with or benefit from.
+
+**Examples:**
+- \\\`feat: add user authentication system\\\`
+- \\\`feat(api): implement RESTful endpoints for user management\\\`
+- \\\`feat(ui): add dark mode toggle to settings\\\`
+
+### fix: A bug fix.
+
+Use \\\`fix\\\` when you're correcting an issue or resolving a problem in the codebase.
+
+**Examples:**
+- \\\`fix: resolve memory leak in image processing\\\`
+- \\\`fix(auth): correct token validation logic\\\`
+- \\\`fix(ui): fix button alignment on mobile devices\\\`
+
+### docs: Changes to documentation.
+
+Use \\\`docs\\\` for any changes that only affect documentation files, README files, or comments.
+
+**Examples:**
+- \\\`docs: update API documentation for new endpoints\\\`
+- \\\`docs(readme): add installation instructions\\\`
+- \\\`docs: improve code comments for better readability\\\`
+
+### style: Changes that don't affect the code's meaning (white-space, formatting, missing semi-colons, etc.).
+
+Use \\\`style\\\` for formatting changes, code style adjustments, or any modifications that don't change functionality.
+
+**Examples:**
+- \\\`style: fix indentation in JavaScript files\\\`
+- \\\`style: remove trailing whitespace\\\`
+- \\\`style: format code according to ESLint rules\\\`
+
+### refactor: Code changes that neither fix a bug nor add a feature.
+
+Use \\\`refactor\\\` when you're restructuring existing code without changing its external behavior.
+
+**Examples:**
+- \\\`refactor: extract common validation logic into utility function\\\`
+- \\\`refactor(api): reorganize route handlers for better structure\\\`
+- \\\`refactor: simplify complex conditional logic\\\`
+
+### perf: Code changes that improve performance.
+
+Use \\\`perf\\\` when your changes specifically improve the performance of the application.
+
+**Examples:**
+- \\\`perf: optimize database queries to reduce response time\\\`
+- \\\`perf(ui): implement virtual scrolling for large lists\\\`
+- \\\`perf: cache frequently accessed data to improve load times\\\`
+
+### test: Adding or modifying tests.
+
+Use \\\`test\\\` when you're adding new tests, modifying existing tests, or making changes to testing infrastructure.
+
+**Examples:**
+- \\\`test: add unit tests for user authentication\\\`
+- \\\`test(api): add integration tests for payment endpoints\\\`
+- \\\`test: update test configuration for better coverage\\\`
+
+### build: Changes that affect the build system or external dependencies.
+
+Use \\\`build\\\` for changes to build tools, package managers, or any modifications that affect compilation.
+
+**Examples:**
+- \\\`build: update Webpack configuration for better bundling\\\`
+- \\\`build: upgrade Node.js version in Dockerfile\\\`
+- \\\`build: add new build script for production deployment\\\`
+
+### ci: Changes to CI configuration files and scripts.
+
+Use \\\`ci\\\` for modifications to continuous integration pipelines, deployment scripts, or automation configuration.
+
+**Examples:**
+- \\\`ci: add automated testing to GitHub Actions\\\`
+- \\\`ci: update deployment pipeline for staging environment\\\`
+- \\\`ci: configure code quality checks in CI workflow\\\`
+
+### chore: Other changes that don't modify src or test files.
+
+Use \\\`chore\\\` for maintenance tasks, dependency updates, or project maintenance changes.
+
+**Examples:**
+- \\\`chore: update dependencies to latest versions\\\`
+- \\\`chore: clean up unused files and directories\\\`
+- \\\`chore: update project configuration files\\\`
+
+`
   },
   'markdown-syntax-highlighting': {
     frontmatter: {

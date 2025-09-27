@@ -1159,7 +1159,7 @@ VibeCommit is a command-line tool that helps you create consistent, conventional
 
 You can find it on GitHub at [https://github.com/MIHIR2006/vibe-commit](https://github.com/MIHIR2006/vibe-commit) and npm at [https://www.npmjs.com/package/vibecommit](https://www.npmjs.com/package/vibecommit).
 
-## Installation
+## Installation & Basic Usage
 
 To install VibeCommit globally, run:
 
@@ -1167,17 +1167,10 @@ To install VibeCommit globally, run:
 npm install -g vibecommit
 \`\`\`
 
-## Basic Usage
-
 Using VibeCommit is straightforward. First, stage your changes in any Git repository:
 
 \`\`\`bash
 git add .
-\`\`\`
-
-Then run:
-
-\`\`\`bash
 vibecommit
 \`\`\`
 
@@ -1190,18 +1183,9 @@ The tool will prompt you to:
 
 Here are some example commit messages that VibeCommit generates:
 
-**With a scope:**
 \`\`\`
 feat(ui): add hover effect on navigation button
-\`\`\`
-
-**Without a scope:**
-\`\`\`
 fix: resolve spacing issue in layout
-\`\`\`
-
-**Production-related commit:**
-\`\`\`
 prod: configure production build settings
 \`\`\`
 
@@ -1218,136 +1202,108 @@ You can customize commit types and scopes in your project's package.json:
 }
 \`\`\`
 
-This allows you to tailor VibeCommit to your specific project needs while maintaining consistency across your team.
+## Understanding Commit Message Types
 
-## Supported Commit Types
+Each commit type serves a specific purpose in maintaining a clean and organized Git history:
 
-VibeCommit supports the following standard commit types:
+### feat: A new feature for the user or a significant addition to the application.
 
-- **feat**: A new feature
-- **fix**: A bug fix
-- **docs**: Documentation only changes
-- **style**: Changes that do not affect the meaning of the code
-- **refactor**: A code change that neither fixes a bug nor adds a feature
-- **perf**: A code change that improves performance
-- **test**: Adding missing tests or correcting existing tests
-- **build**: Changes that affect the build system or external dependencies
-- **ci**: Changes to our CI configuration files and scripts
-- **chore**: Other changes that don't modify src or test files
-- **revert**: Reverts a previous commit
-- **prod**: Production-related changes
+Use \`feat\` when you're adding new functionality that users will interact with or benefit from.
+
+**Examples:**
+- \`feat: add user authentication system\`
+- \`feat(api): implement RESTful endpoints for user management\`
+- \`feat(ui): add dark mode toggle to settings\`
+
+### fix: A bug fix.
+
+Use \`fix\` when you're correcting an issue or resolving a problem in the codebase.
+
+**Examples:**
+- \`fix: resolve memory leak in image processing\`
+- \`fix(auth): correct token validation logic\`
+- \`fix(ui): fix button alignment on mobile devices\`
+
+### docs: Changes to documentation.
+
+Use \`docs\` for any changes that only affect documentation files, README files, or comments.
+
+**Examples:**
+- \`docs: update API documentation for new endpoints\`
+- \`docs(readme): add installation instructions\`
+- \`docs: improve code comments for better readability\`
+
+### style: Changes that don't affect the code's meaning (white-space, formatting, missing semi-colons, etc.).
+
+Use \`style\` for formatting changes, code style adjustments, or any modifications that don't change functionality.
+
+**Examples:**
+- \`style: fix indentation in JavaScript files\`
+- \`style: remove trailing whitespace\`
+- \`style: format code according to ESLint rules\`
+
+### refactor: Code changes that neither fix a bug nor add a feature.
+
+Use \`refactor\` when you're restructuring existing code without changing its external behavior.
+
+**Examples:**
+- \`refactor: extract common validation logic into utility function\`
+- \`refactor(api): reorganize route handlers for better structure\`
+- \`refactor: simplify complex conditional logic\`
+
+### perf: Code changes that improve performance.
+
+Use \`perf\` when your changes specifically improve the performance of the application.
+
+**Examples:**
+- \`perf: optimize database queries to reduce response time\`
+- \`perf(ui): implement virtual scrolling for large lists\`
+- \`perf: cache frequently accessed data to improve load times\`
+
+### test: Adding or modifying tests.
+
+Use \`test\` when you're adding new tests, modifying existing tests, or making changes to testing infrastructure.
+
+**Examples:**
+- \`test: add unit tests for user authentication\`
+- \`test(api): add integration tests for payment endpoints\`
+- \`test: update test configuration for better coverage\`
+
+### build: Changes that affect the build system or external dependencies.
+
+Use \`build\` for changes to build tools, package managers, or any modifications that affect compilation.
+
+**Examples:**
+- \`build: update Webpack configuration for better bundling\`
+- \`build: upgrade Node.js version in Dockerfile\`
+- \`build: add new build script for production deployment\`
+
+### ci: Changes to CI configuration files and scripts.
+
+Use \`ci\` for modifications to continuous integration pipelines, deployment scripts, or automation configuration.
+
+**Examples:**
+- \`ci: add automated testing to GitHub Actions\`
+- \`ci: update deployment pipeline for staging environment\`
+- \`ci: configure code quality checks in CI workflow\`
+
+### chore: Other changes that don't modify src or test files.
+
+Use \`chore\` for maintenance tasks, dependency updates, or project maintenance changes.
+
+**Examples:**
+- \`chore: update dependencies to latest versions\`
+- \`chore: clean up unused files and directories\`
+- \`chore: update project configuration files\`
 
 ## Why Choose VibeCommit?
 
-### Lightweight and Fast
-VibeCommit has minimal dependencies and starts quickly, making it perfect for frequent use during development.
-
-### Zero Configuration
-Works out of the box with sensible defaults. No complex setup required.
-
-### Interactive Interface
-The tool guides you through creating commit messages step by step, reducing the chance of errors.
-
-### Consistent Formatting
-Ensures all commit messages follow the conventional commit format, making your Git history clean and readable.
-
-### Team-Friendly
-Easy to adopt across teams with minimal learning curve.
-
-## Integration with Git Workflow
-
-VibeCommit integrates seamlessly with your existing Git workflow:
-
-\`\`\`bash
-# Stage your changes
-git add .
-
-# Use VibeCommit to create a commit message
-vibecommit
-
-# Push your changes
-git push origin main
-\`\`\`
-
-## Advanced Usage
-
-For more advanced usage, you can also use VibeCommit with specific options:
-
-\`\`\`bash
-# Skip the interactive prompt and use defaults
-vibecommit --quick
-
-# Specify a custom scope
-vibecommit --scope api
-
-# Use a specific commit type
-vibecommit --type fix
-\`\`\`
-
-## Best Practices
-
-When using VibeCommit, follow these best practices:
-
-1. **Be descriptive**: Write clear, concise commit messages
-2. **Use present tense**: Write in imperative mood ("add feature" not "added feature")
-3. **Keep it short**: The first line should be 50 characters or less
-4. **Add details**: Use the body to explain what and why, not how
-5. **Be consistent**: Use the same format across your project
-
-## Comparison with Other Tools
-
-| Feature | VibeCommit | commitlint | git-conventional-commits |
-|---------|------------|------------|-------------------------|
-| **Setup Complexity** | Minimal | High | Medium |
-| **Configuration** | Optional | Required | Required |
-| **Interactive Mode** | Yes | No | No |
-| **Learning Curve** | Low | Medium | Medium |
-| **Dependencies** | Minimal | Many | Many |
-
-## Getting Started
-
-Ready to improve your commit messages? Here's how to get started:
-
-1. **Install VibeCommit:**
-   \`\`\`bash
-   npm install -g vibecommit
-   \`\`\`
-
-2. **Navigate to your Git repository:**
-   \`\`\`bash
-   cd your-project
-   \`\`\`
-
-3. **Stage your changes:**
-   \`\`\`bash
-   git add .
-   \`\`\`
-
-4. **Run VibeCommit:**
-   \`\`\`bash
-   vibecommit
-   \`\`\`
-
-5. **Follow the prompts** to create your commit message
-
-## Contributing
-
-VibeCommit is open source and welcomes contributions! You can:
-
-- Report bugs on GitHub
-- Suggest new features
-- Submit pull requests
-- Help improve documentation
-
-Visit the [GitHub repository](https://github.com/MIHIR2006/vibe-commit) to get involved.
-
-## Conclusion
-
-VibeCommit is designed for developers who want a fast, no-fuss way to enforce Conventional Commits without complex setup. It's lightweight, dependency-free, and integrates seamlessly with your Git workflow.
-
-Whether you're working solo or as part of a team, VibeCommit can help you maintain clean, consistent commit messages that make your Git history more readable and professional.
-
-Check out the full README on GitHub for more details and advanced usage examples. Start using VibeCommit today and see how it can improve your development workflow!`,
+- **Lightweight and Fast**: Minimal dependencies, starts quickly
+- **Zero Configuration**: Works out of the box with sensible defaults
+- **Interactive Interface**: Guides you step by step, reducing errors
+- **Consistent Formatting**: Ensures conventional commit format
+- **Team-Friendly**: Easy to adopt across teams with minimal learning curve
+`,
     author: {
       name: "Mihir Goswami",
       avatar: "/images/Mihir.png",
