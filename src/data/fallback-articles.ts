@@ -1,5 +1,6 @@
-import { Article } from "@/lib/articles";
-import { articles } from "./articles";
+// This file is deprecated - articles are now loaded from MDX files in /content/blog/
+// See mdx-server.ts for the new implementation
 
-// Export the original articles as a fallback
-export const fallbackArticles = articles as Article[]; 
+import { Article } from "@/lib/articles";
+
+export const fallbackArticles: Article[] = [];

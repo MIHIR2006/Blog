@@ -1,182 +1,120 @@
-'use client'
+import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { getArticleBySlug, getAllArticles } from '@/lib/mdx-server'
+import BlogPostClient from './BlogPostClient'
 
-import { Footer } from "@/components/Footer"
-import { Header } from "@/components/Header"
-import MDXContent from "@/components/MDXContent"
-import { ProgressBar } from "@/components/ProgressBar"
-import { ShareButtons } from "@/components/ShareButtons"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Article, getArticleById } from "@/lib/articles"
-import { ArrowLeft } from "lucide-react"
-import Image from "next/image"
-import { useParams, useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+interface BlogPostPageProps {
+  params: Promise<{ id: string }>
+}
 
-export default function BlogPostPage() {
-  const { id } = useParams<{ id: string }>()
-  const router = useRouter()
-  const contentRef = useRef<HTMLDivElement>(null)
-  const [article, setArticle] = useState<Article | null>(null)
-  const [loading, setLoading] = useState(true)
+// Generate static params for all articles
+export async function generateStaticParams() {
+  const articles = getAllArticles()
+  return articles.map((article) => ({
+    id: article.frontmatter.id,
+  }))
+}
 
-  // Fetch article when component mounts or id changes
-  useEffect(() => {
-    async function loadArticle() {
-      if (id) {
-        try {
-          const fetchedArticle = await getArticleById(id)
-          setArticle(fetchedArticle || null)
-        } catch (error) {
-          console.error("Error fetching article:", error)
-          setArticle(null)
-        } finally {
-          setLoading(false)
-        }
-      }
-    }
-    
-    loadArticle()
-  }, [id])
-
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [id])
-
-  // If no article is found, redirect to blog page
-  useEffect(() => {
-    if (!loading && !article) {
-      router.push("/blog")
-    }
-  }, [article, router, loading])
-
-  // Show loading state
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <ProgressBar />
-        <div className="flex-grow flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4">Loading article...</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    )
-  }
+// Generate metadata for each blog post
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { id } = await params
+  const article = getArticleBySlug(id)
 
   if (!article) {
-    return null
+    return {
+      title: 'Article Not Found',
+    }
+  }
+
+  const { frontmatter } = article
+
+  return {
+    title: frontmatter.title,
+    description: frontmatter.excerpt,
+    authors: [{ name: frontmatter.author.name }],
+    keywords: frontmatter.tags,
+    openGraph: {
+      title: frontmatter.title,
+      description: frontmatter.excerpt,
+      type: 'article',
+      publishedTime: frontmatter.date,
+      authors: [frontmatter.author.name],
+      images: [
+        {
+          url: frontmatter.coverImage,
+          width: 1200,
+          height: 630,
+          alt: frontmatter.title,
+        },
+      ],
+      tags: frontmatter.tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: frontmatter.title,
+      description: frontmatter.excerpt,
+      images: [frontmatter.coverImage],
+      creator: '@MIHIR___0007',
+    },
+  }
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { id } = await params
+  const article = getArticleBySlug(id)
+
+  if (!article) {
+    notFound()
+  }
+
+  // Convert to the format expected by the client component
+  const articleData = {
+    id: article.frontmatter.id,
+    title: article.frontmatter.title,
+    excerpt: article.frontmatter.excerpt,
+    coverImage: article.frontmatter.coverImage,
+    content: article.content,
+    author: article.frontmatter.author,
+    date: article.frontmatter.date,
+    readTime: article.frontmatter.readTime,
+    tags: article.frontmatter.tags,
+  }
+
+  // Generate JSON-LD structured data
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.frontmatter.title,
+    description: article.frontmatter.excerpt,
+    image: article.frontmatter.coverImage,
+    datePublished: article.frontmatter.date,
+    author: {
+      '@type': 'Person',
+      name: article.frontmatter.author.name,
+      url: 'https://mihir-goswami-portfolio.vercel.app',
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Mihir Goswami',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://mihirgoswamiblogs.vercel.app/images/Mihir.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://mihirgoswamiblogs.vercel.app/blog/${id}`,
+    },
+    keywords: article.frontmatter.tags.join(', '),
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <ProgressBar />
-
-      <main className="flex-grow">
-        <article className="py-10">
-          <div className="container-medium">
-            {/* Back button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mb-8"
-              onClick={() => router.push("/blog")}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
-
-            {/* Article header */}
-            <header className="mb-10">
-              <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-                {article.title}
-              </h1>
-
-              <div className="flex items-center gap-4 mb-8">
-                <Avatar className="h-10 w-10">
-                  <AvatarImage src={article.author.avatar} alt={article.author.name} />
-                  <AvatarFallback>{article.author.initials}</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
-                  <div className="text-base font-medium">{article.author.name}</div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <time dateTime={article.date}>{article.date}</time>
-                    <span className="mx-1">·</span>
-                    <span>{article.readTime}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cover image */}
-              <div className="overflow-hidden rounded-lg mb-8 aspect-[16/9]">
-                <Image
-                  src={article.coverImage}
-                  alt={article.title}
-                  width={1200}
-                  height={675}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Share buttons */}
-              <ShareButtons
-                title={article.title}
-                url={typeof window !== 'undefined' ? window.location.href : ''}
-              />
-            </header>
-
-            {/* Article content */}
-            <div ref={contentRef}>
-              <MDXContent content={article.content} />
-            </div>
-
-            {/* Tags */}
-            <div className="mt-10">
-              <div className="flex flex-wrap gap-2">
-                {article.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <Separator className="my-10" />
-
-            {/* Author bio */}
-            <div className="flex items-start gap-4 mb-10">
-              <Avatar className="h-12 w-12">
-                <AvatarImage src={article.author.avatar} alt={article.author.name} />
-                <AvatarFallback>{article.author.initials}</AvatarFallback>
-              </Avatar>
-              <div>
-                <div className="font-serif text-lg font-medium mb-2">{article.author.name}</div>
-                <p className="text-muted-foreground text-sm mb-4">{article.author.bio}</p>
-                <a href="https://x.com/MIHIR___0007">
-                  <Button variant="outline" size="sm">Say Hi</Button>
-                </a>
-              </div>
-            </div>
-
-            {/* Share buttons (bottom) */}
-            <ShareButtons
-              title={article.title}
-              url={typeof window !== 'undefined' ? window.location.href : ''}
-            />
-          </div>
-        </article>
-      </main>
-
-      <Footer />
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BlogPostClient article={articleData} />
+    </>
   )
 }
