@@ -1,4 +1,4 @@
-import { articles } from "@/data/articles";
+import { articles as articlesMetadata } from "@/data/articles";
 import { useEffect, useMemo, useState } from "react";
 
 interface Author {
@@ -23,8 +23,7 @@ export function useSearch(query: string) {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Memoize articles data to avoid recreating on each render
-  const articlesData = useMemo(() => articles, []);
+  const articlesData = useMemo(() => articlesMetadata, []);
 
   useEffect(() => {
     if (!query || !query.trim()) {
@@ -35,34 +34,27 @@ export function useSearch(query: string) {
 
     setIsLoading(true);
 
-    // Use a faster timeout to improve perceived performance
     const timeoutId = setTimeout(() => {
       try {
         const searchTerm = query.toLowerCase().trim();
-        
-        // Create a single regex for more efficient searching
         const searchRegex = new RegExp(searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-        
+
         const filteredResults = articlesData
           .filter(article => {
             if (!article) return false;
-            
-            // Use regex test which is faster than includes for repeated searches
+
             const titleMatch = searchRegex.test(article.title || "");
-            const contentMatch = searchRegex.test(article.content || "");
             const excerptMatch = searchRegex.test(article.excerpt || "");
-            
-            // Check tags in a more optimized way
-            const tagsMatch = article.tags?.some(tag => 
+
+            const tagsMatch = article.tags?.some(tag =>
               searchRegex.test(tag || "")
             ) || false;
-            
-            // Check author name
-            const authorMatch = article.author?.name 
-              ? searchRegex.test(article.author.name) 
+
+            const authorMatch = article.author?.name
+              ? searchRegex.test(article.author.name)
               : false;
-            
-            return titleMatch || contentMatch || tagsMatch || excerptMatch || authorMatch;
+
+            return titleMatch || tagsMatch || excerptMatch || authorMatch;
           })
           .map(article => ({
             id: article.id,
@@ -83,7 +75,7 @@ export function useSearch(query: string) {
       } finally {
         setIsLoading(false);
       }
-    }, 100); // Reduced from 150ms to 100ms for better performance
+    }, 100);
 
     return () => clearTimeout(timeoutId);
   }, [query, articlesData]);
@@ -92,4 +84,4 @@ export function useSearch(query: string) {
     results,
     isLoading
   };
-} 
+}

@@ -1,13 +1,12 @@
 import { useTheme } from '@/hooks/useTheme';
-import 'highlight.js/styles/github-dark.css'; // Import a highlight.js theme
+import 'highlight.js/styles/github-dark.css';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import rehypeHighlight from 'rehype-highlight';
 
-// Custom CSS to ensure code blocks work in both light and dark modes
 const codeBlockStyles = `
-  /* Base styling for all code blocks */
   .prose pre {
     background-color: #1e1e1e !important;
     color: #d4d4d4 !important;
@@ -16,14 +15,12 @@ const codeBlockStyles = `
     overflow-x: auto;
   }
 
-  /* Text color consistency for light and dark modes */
   .prose pre code, 
   :root:not(.dark) .prose pre code,
   .dark .prose pre code {
     color: #d4d4d4 !important;
   }
 
-  /* Consistent syntax highlighting colors in both modes */
   .prose pre .hljs-keyword, 
   :root:not(.dark) .prose pre .hljs-keyword { color: #569cd6 !important; }
   
@@ -90,7 +87,6 @@ const codeBlockStyles = `
   .prose pre .hljs-variable,
   :root:not(.dark) .prose pre .hljs-variable { color: #9cdcfe !important; }
 
-  /* Inline code */
   .prose :not(pre) > code {
     background-color: rgba(144, 144, 144, 0.2);
     padding: 0.2em 0.4em;
@@ -100,23 +96,46 @@ const codeBlockStyles = `
   }
 `;
 
-// Custom components that can be used in MDX
+interface MDXImageProps {
+  src?: string;
+  alt?: string;
+}
+
+function MDXImage({ src, alt }: MDXImageProps) {
+  if (!src) return null;
+
+  const isExternal = src.startsWith('http://') || src.startsWith('https://');
+
+  return (
+    <span className="block my-6">
+      <Image
+        src={src}
+        alt={alt || 'Article image'}
+        width={800}
+        height={450}
+        className="rounded-lg w-full h-auto"
+        unoptimized={isExternal}
+      />
+      {alt && <span className="block text-center text-sm text-muted-foreground mt-2">{alt}</span>}
+    </span>
+  );
+}
+
 const components = {
-  h1: (props: any) => <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-bold mt-5 mb-2" {...props} />,
-  p: (props: any) => <p className="my-4" {...props} />,
-  ul: (props: any) => <ul className="list-disc pl-6 my-4" {...props} />,
-  ol: (props: any) => <ol className="list-decimal pl-6 my-4" {...props} />,
-  li: (props: any) => <li className="mb-1" {...props} />,
-  a: (props: any) => (
-    <a className="text-blue-500 hover:text-blue-700 underline" {...props} />
+  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />,
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />,
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h3 className="text-xl font-bold mt-5 mb-2" {...props} />,
+  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => <p className="my-4" {...props} />,
+  ul: (props: React.HTMLAttributes<HTMLUListElement>) => <ul className="list-disc pl-6 my-4" {...props} />,
+  ol: (props: React.HTMLAttributes<HTMLOListElement>) => <ol className="list-decimal pl-6 my-4" {...props} />,
+  li: (props: React.HTMLAttributes<HTMLLIElement>) => <li className="mb-1" {...props} />,
+  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a className="text-blue-500 hover:text-blue-700 underline" target="_blank" rel="noopener noreferrer" {...props} />
   ),
-  blockquote: (props: any) => (
+  blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4" {...props} />
   ),
-  // We don't need to define code and pre components here as rehype-highlight will handle them
-  // They are causing conflicts with the syntax highlighting
+  img: MDXImage,
 };
 
 interface MDXContentProps {
@@ -128,12 +147,9 @@ export const MDXContent = ({ content }: MDXContentProps) => {
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
 
-  // CSS themes are now imported globally
-
   useEffect(() => {
     const processMdx = async () => {
       try {
-        // Process the content with rehype-highlight for syntax highlighting
         const mdxSource = await serialize(content, {
           mdxOptions: {
             rehypePlugins: [
@@ -164,4 +180,4 @@ export const MDXContent = ({ content }: MDXContentProps) => {
   );
 };
 
-export default MDXContent; 
+export default MDXContent;

@@ -3,14 +3,25 @@ import { Footer } from "@/components/Footer"
 import { Header } from "@/components/Header"
 import { ProgressBar } from "@/components/ProgressBar"
 import { Button } from "@/components/ui/button"
-import { articles } from "@/data/articles"
+import { getAllArticles } from "@/lib/mdx-server"
 import Link from "next/link"
 
 export default function HomePage() {
-  // Get the featured article (first one)
-  const featuredArticle = articles[0]
+  const mdxArticles = getAllArticles()
 
-  // Get the rest of the articles
+  // Convert to format expected by ArticleCard
+  const articles = mdxArticles.map(article => ({
+    id: article.frontmatter.id,
+    title: article.frontmatter.title,
+    excerpt: article.frontmatter.excerpt,
+    coverImage: article.frontmatter.coverImage,
+    author: article.frontmatter.author,
+    date: article.frontmatter.date,
+    readTime: article.frontmatter.readTime,
+    tags: article.frontmatter.tags,
+  }))
+
+  const featuredArticle = articles[0]
   const recentArticles = articles.slice(1)
 
   return (
@@ -19,7 +30,6 @@ export default function HomePage() {
       <ProgressBar />
 
       <main className="flex-grow">
-        {/* Hero section */}
         <section className="py-12 md:py-20">
           <div className="container-medium">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8">
@@ -39,7 +49,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Featured article section */}
         <section className="py-10 border-t border-border">
           <div className="container-medium">
             <div className="flex justify-between items-center mb-8">
@@ -49,20 +58,21 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <ArticleCard
-              id={featuredArticle.id}
-              title={featuredArticle.title}
-              excerpt={featuredArticle.excerpt}
-              coverImage={featuredArticle.coverImage}
-              author={featuredArticle.author}
-              date={featuredArticle.date}
-              readTime={featuredArticle.readTime}
-              featured={true}
-            />
+            {featuredArticle && (
+              <ArticleCard
+                id={featuredArticle.id}
+                title={featuredArticle.title}
+                excerpt={featuredArticle.excerpt}
+                coverImage={featuredArticle.coverImage}
+                author={featuredArticle.author}
+                date={featuredArticle.date}
+                readTime={featuredArticle.readTime}
+                featured={true}
+              />
+            )}
           </div>
         </section>
 
-        {/* Recent articles section */}
         <section className="py-10 border-t border-border">
           <div className="container-medium">
             <div className="flex justify-between items-center mb-8">

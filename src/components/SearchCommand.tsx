@@ -1,11 +1,11 @@
 import {
-    CommandDialog,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-    CommandSeparator
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator
 } from "@/components/ui/command";
 import { useSearch } from "@/hooks/useSearch";
 import { ArrowRightIcon, Loader2, SearchIcon } from "lucide-react";
@@ -23,9 +23,6 @@ export function SearchCommand({
   const [query, setQuery] = useState("");
   const { results, isLoading } = useSearch(query);
 
-  console.log("SearchCommand render:", { open, resultsCount: results.length, isLoading });
-
-  // Handle keyboard shortcut to open search dialog
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -38,7 +35,6 @@ export function SearchCommand({
     return () => document.removeEventListener("keydown", down);
   }, [open, setOpen]);
 
-  // Reset search when dialog closes
   useEffect(() => {
     if (!open) {
       setQuery("");
@@ -46,14 +42,13 @@ export function SearchCommand({
   }, [open]);
 
   const handleQueryChange = (value: string) => {
-    console.log("Search query changed:", value);
     setQuery(value);
   };
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput 
-        placeholder="Search articles..." 
+      <CommandInput
+        placeholder="Search articles..."
         value={query}
         onValueChange={handleQueryChange}
         autoFocus={true}
@@ -69,7 +64,7 @@ export function SearchCommand({
             "No results found."
           )}
         </CommandEmpty>
-        
+
         {results.length > 0 && (
           <>
             <CommandGroup heading="Articles">
@@ -88,7 +83,7 @@ export function SearchCommand({
                   </div>
                 </CommandItem>
               ))}
-              
+
               {results.length > 5 && (
                 <CommandItem
                   onSelect={() => {
@@ -102,9 +97,9 @@ export function SearchCommand({
                 </CommandItem>
               )}
             </CommandGroup>
-            
+
             <CommandSeparator />
-            
+
             <CommandGroup heading="Tags">
               {Array.from(new Set(results.flatMap(r => r.tags))).slice(0, 5).map(tag => (
                 <CommandItem
@@ -118,9 +113,9 @@ export function SearchCommand({
                 </CommandItem>
               ))}
             </CommandGroup>
-            
+
             <CommandSeparator />
-            
+
             <CommandGroup>
               <CommandItem
                 onSelect={() => {
@@ -141,4 +136,4 @@ export function SearchCommand({
       </CommandList>
     </CommandDialog>
   );
-} 
+}

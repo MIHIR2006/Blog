@@ -1,0 +1,221 @@
+---
+id: "markdown-syntax-highlighting"
+title: "Markdown & Syntax Highlighting in Web Development"
+excerpt: "Learn how to effectively use Markdown with syntax highlighting to create beautiful documentation and code examples for your web projects."
+coverImage: "https://serokell.io/files/pm/pmzzkh71.Markdown_markup_language_pic1.jpg"
+date: "Oct 21, 2024"
+readTime: "8 min read"
+author:
+  name: "Mihir Goswami"
+  avatar: "/images/Mihir.png"
+  initials: "MG"
+  bio: "Technical writer and web developer with a passion for clear documentation."
+tags:
+  - "Markdown"
+  - "Syntax Highlighting"
+  - "Documentation"
+  - "Web Development"
+  - "MDX"
+---
+
+# Markdown & Syntax Highlighting in Web Development
+
+*Create beautiful documentation and code examples with minimal effort*
+
+Markdown has become the de facto standard for writing documentation, READMEs, and even blog posts in the web development world. When combined with syntax highlighting, it creates an excellent reading experience for technical content.
+
+## Getting Started with Markdown
+
+Markdown is a lightweight markup language that allows you to write formatted content using plain text. It's designed to be easy to write and easy to read.
+
+### Basic Syntax
+
+Here are the fundamental Markdown elements you'll use most often:
+
+#### Headings
+
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+```
+
+#### Text Formatting
+
+```markdown
+**Bold text**
+*Italic text*
+~~Strikethrough~~
+`inline code`
+```
+
+#### Lists
+
+```markdown
+- Unordered item 1
+- Unordered item 2
+
+1. Ordered item 1
+2. Ordered item 2
+```
+
+#### Links and Images
+
+```markdown
+[Link text](https://example.com)
+![Alt text](/path/to/image.jpg)
+```
+
+## Adding Images in Markdown
+
+One of the most useful features of Markdown is how easy it is to add images. You can add images anywhere in your content:
+
+```markdown
+Here's an inline image:
+
+![My diagram](/images/diagram.png)
+
+You can also add images with titles:
+
+![My screenshot](/images/screenshot.jpg "This is a screenshot")
+```
+
+### Best Practices for Images
+
+1. **Use descriptive alt text** - This helps with accessibility and SEO
+2. **Optimize image sizes** - Large images slow down page loads
+3. **Use relative paths** - Makes your content more portable
+4. **Consider image placement** - Images should enhance, not distract from, your content
+
+## Code Blocks and Syntax Highlighting
+
+For developers, syntax highlighting is essential. Markdown supports fenced code blocks with language specification:
+
+```javascript
+// JavaScript example
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+```
+
+```python
+# Python example
+def greet(name):
+    return f"Hello, {name}!"
+```
+
+```go
+// Go example
+func greet(name string) string {
+    return fmt.Sprintf("Hello, %s!", name)
+}
+```
+
+## MDX: Markdown on Steroids
+
+MDX allows you to use JSX components within Markdown, making it perfect for interactive documentation and blogs:
+
+```mdx
+import { Button } from './components/Button'
+
+# My Interactive Post
+
+Here's a regular paragraph.
+
+<Button onClick={() => alert('Clicked!')}>
+  Click me!
+</Button>
+
+Back to regular markdown content.
+```
+
+### Benefits of MDX
+
+1. **Interactive examples** - Embed live code demos
+2. **Custom components** - Use your design system in content
+3. **Type safety** - Works great with TypeScript
+4. **Better maintainability** - Components can be updated everywhere at once
+
+## Setting Up Syntax Highlighting
+
+### Option 1: Highlight.js
+
+```javascript
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github-dark.css';
+
+// Highlight all code blocks
+document.querySelectorAll('pre code').forEach((block) => {
+  hljs.highlightElement(block);
+});
+```
+
+### Option 2: Prism.js
+
+```javascript
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-tomorrow.css';
+
+// Highlight on page load
+Prism.highlightAll();
+```
+
+### Option 3: Rehype Highlight (for MDX)
+
+```javascript
+import rehypeHighlight from 'rehype-highlight';
+
+const mdxSource = await serialize(content, {
+  mdxOptions: {
+    rehypePlugins: [rehypeHighlight],
+  },
+});
+```
+
+## Creating Documentation with Markdown
+
+Here's a complete example of a well-structured README:
+
+```markdown
+# Project Name
+
+A brief description of what this project does.
+
+## Installation
+
+\`\`\`bash
+npm install my-project
+\`\`\`
+
+## Usage
+
+\`\`\`javascript
+import { myFunction } from 'my-project';
+
+myFunction('Hello');
+\`\`\`
+
+## API Reference
+
+### `myFunction(message)`
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `message` | `string` | **Required**. Your message |
+
+## Contributing
+
+Pull requests are welcome. For major changes, 
+please open an issue first.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+```
+
+## Conclusion
+
+Markdown combined with syntax highlighting creates an excellent developer experience for both writers and readers. Whether you're writing documentation, blog posts, or technical tutorials, these tools make your content more accessible and professional.
+
+Start with basic Markdown, add syntax highlighting for code blocks, and consider MDX when you need interactive components. Your readers will thank you!
